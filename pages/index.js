@@ -4,7 +4,7 @@ export default function Home() {
     return (
       <div className="container p-3">
         <header id={styles.showcase}>
-            <div class={styles.showcase-content}>
+            <div class={styles.showcase_content}>
                 <h1 class="l-heading">
                     The Sky Is The Limit
                 </h1>
