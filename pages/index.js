@@ -15,7 +15,7 @@ export default function Home() {
                     In addition to physical and mental well-being, it also relaxes and helps health.
                 </p>
                 <p>
-                    Its an activity to throw away what you don't need and organize objects better, giving more practicality to everyday life.
+                    It&#39;s an activity to throw away what you don&#39;t need and organize objects better, giving more practicality to everyday life.
                 </p>
             </div>
         </header>
