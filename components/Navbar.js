@@ -6,20 +6,20 @@ import Image from 'next/image'
 
 export default function Navbar() {
   return (
-    <div class="Container">
-      <nav id={styles.navbar}>
-        <h1 class="logo">
-          <span class="text-p">
+    <div className="Container">
+      <nav className={styles.navbar}>
+        <h1 className="logo">
+          <span className="text-p">
           <Image
               src="/img/LogoSombra.png"
-              width="350"
-              height="200"
+              width="150"
+              height="50"
               alt="Broadway Clean Services"
             />
             Broadway Clean Services
           </span>
         </h1>
-        <ul class={styles.menu}>
+        <ul className={styles.menu}>
           <li> <Link href="/">Home</Link></li>
           <li> <Link href="/services"><a>Services</a></Link></li>
           <li> <Link href="/price"><a>Price and Booking</a></Link></li>

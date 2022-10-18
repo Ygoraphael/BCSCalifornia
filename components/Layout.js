@@ -7,7 +7,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <link rel="shortcut icon" href="/images/Logo.png" />
+        <link rel="shortcut icon" href="/img/Logo.png" />
         <title>BCS California</title>
       </Head>
       <Navbar />
