@@ -6,7 +6,7 @@ export default function Home() {
         <header className={styles.showcase}>
             <div className={styles.showcase_content}>
                 <h1 className="l-heading">
-                    BROADWAY CLEAN SERVICES MAKING YOUR LIFE EASY
+                    BROADWAY CLEAN SERVICES BEST CHOICE TO CLEAN YOUR SPACE
                 </h1>
                 <p className="lead">
                     A neat, clean and organized home brings a number of benefits to the whole family.

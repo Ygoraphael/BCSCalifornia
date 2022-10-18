@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <p>
-        <span>Broadway Clean Services</span> &copy; {new Date().getFullYear()}
+        <span> Copyright &copy; {new Date().getFullYear()}, Broadway Clean Services, All Rights Reserverd</span>
       </p>
     </footer>
   )
