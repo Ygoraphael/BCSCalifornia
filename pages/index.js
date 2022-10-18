@@ -10,8 +10,12 @@ export default function Home() {
                 </h1>
                 <p className="lead">
                     A neat, clean and organized home brings a number of benefits to the whole family.
+                </p>
+                <p>
                     In addition to physical and mental well-being, it also relaxes and helps health.
-                    It's an activity to throw away what you don't need and organize objects better, giving more practicality to everyday life.
+                </p>
+                <p>
+                    Its an activity to throw away what you don't need and organize objects better, giving more practicality to everyday life.
                 </p>
             </div>
         </header>
