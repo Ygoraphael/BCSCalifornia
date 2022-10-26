@@ -1,0 +1,24 @@
+  .Container {
+    background : #333;
+    height: 100vh;
+    color: white;
+  }
+  
+  .Container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center; 
+    height:100%;
+    padding: 0 2rem;
+  }
+  
+  .Container_form{
+    display: inline-block;
+    justify-content: space-between;
+  }
+
+  .Container_form_group{
+    color: red;
+  }

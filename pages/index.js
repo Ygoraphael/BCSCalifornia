@@ -2,7 +2,6 @@ import styles from '../styles/index.module.css'
 
 export default function Home() {
     return (
-      <div className="container p-3">
         <header className={styles.showcase}>
             <div className={styles.showcase_content}>
                 <h1 className="l-heading">
@@ -19,7 +18,5 @@ export default function Home() {
                 </p>
             </div>
         </header>
-
-      </div>
     );
   }

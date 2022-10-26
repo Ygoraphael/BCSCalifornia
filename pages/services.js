@@ -2,7 +2,7 @@ import styles from '../styles/services.module.css'
 
 export default function Navbar() {
     return (
-        <div class={styles.Container}>            
+        <div className={styles.Container}>
             Standard Cleaning
             <br></br>
             <p>-All Rooms:</p>

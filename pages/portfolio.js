@@ -1,6 +1,6 @@
 export default function portfolio() {
     return (
-        <div class="Containeir">
+        <div className="Containeir">
             PORTFOLIO
         </div>
     );
