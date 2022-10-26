@@ -15,6 +15,7 @@ export default function Navbar() {
               width="150"
               height="50"
               alt="Broadway Clean Services"
+              loading="lazy"
             />
             Broadway Clean Services
           </span>
