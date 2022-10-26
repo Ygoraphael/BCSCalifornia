@@ -1,4 +1,3 @@
-import { server } from '../config/index';
 import { useEffect, useState } from 'react';
 
 export default function Yelp() {
