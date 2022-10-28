@@ -8,9 +8,6 @@ export default function Yelp() {
         await fetch(`/Reviews`, {
             headers: {
                 Authorization: `Bearer tEOdJQPpkqhMr5iQswLX-vHYq5C4vy-C65X0EjO07sfTqX1QMQD-oLFApPj0h4SxJw5Jy6gh5YKsGE5OrjXpagmiwVXmluFUBtYm4f9o_kPGQ1FBTtgLVIuXYAtOY3Yx`,
-                Origin: 'localhost',
-                "Content-Type": "application/json",
-                withCredentials: true,
             }
         }).then(res => res.json())
         .then(json => {
@@ -23,9 +20,7 @@ export default function Yelp() {
         console.log(reviews);
     }
 
-    useEffect(() => { 
-        APIYelp().then(console.log("reviews"));        
-    }, []);
+    useEffect(() => { APIYelp(); }, []);
 
     return (
         <div className="Container">
