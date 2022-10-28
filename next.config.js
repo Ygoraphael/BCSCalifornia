@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: '/Reviews',
-        destination: 'https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews',
+        destination: 'https://api.yelp.com/v3/businesses/broadway-clean-services-richmond-6/reviews',
       },
     ]
   },
