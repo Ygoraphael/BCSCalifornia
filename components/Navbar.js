@@ -1,8 +1,6 @@
 import Link from 'next/link'
-
 import Styles from '../styles/navbar.module.css'
-
-import Image from 'next/image'
+import Logo from "../public/img/LogoSombra.png";
 
 export default function Navbar() {
   return (
@@ -10,12 +8,7 @@ export default function Navbar() {
       <nav className={Styles.navbar}>
         <h1 className="logo">
           <span className="text-p">
-            <Image
-                src="/img/LogoSombra.png"
-                width="150"
-                height="50"
-                alt="Broadway Clean Services"
-            />
+            <img src={Logo.src} width="150" height="50" alt="Broadway Clean Services" loading="lazy"/>
             Broadway Clean Services
           </span>
         </h1>
