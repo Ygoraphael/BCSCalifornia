@@ -19,7 +19,6 @@ export default function Yelp() {
     return (
         <div className="Container">
             YELP REVIEWS
-            { !reviews && <p> VAZIO</p> }
             {reviews?.map((item, index) => {
                 return (
                     <div key={index}>

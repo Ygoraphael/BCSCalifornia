@@ -1,9 +1,9 @@
-import styles from '../styles/index.module.css'
+import Styles from '../styles/index.module.css'
 
 export default function Home() {
     return (
-        <header className={styles.showcase}>
-            <div className={styles.showcase_content}>
+        <header className={Styles.showcase}>
+            <div className={Styles.showcase_content}>
                 <h1 className="l-heading">
                     BROADWAY CLEAN SERVICES BEST CHOICE TO CLEAN YOUR SPACE
                 </h1>
