@@ -9,6 +9,7 @@ export default function Yelp() {
                 Authorization: `Bearer tEOdJQPpkqhMr5iQswLX-vHYq5C4vy-C65X0EjO07sfTqX1QMQD-oLFApPj0h4SxJw5Jy6gh5YKsGE5OrjXpagmiwVXmluFUBtYm4f9o_kPGQ1FBTtgLVIuXYAtOY3Yx`,
                 Origin: 'localhost',
                 withCredentials: true,
+                Accept: '*/*'
             }
         }).then(res => res.json())
         .then(json => {
