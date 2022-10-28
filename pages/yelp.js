@@ -1,30 +1,37 @@
 import { useEffect, useState } from 'react';
 
 export default function Yelp() {
-    const [reviews, setReviews] = useState(null);
+    const [reviews, setReviews] = useState([]);
     
     const APIYelp = async () => {
-        fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews`, {
+        const data = [];
+        await fetch(`/Reviews`, {
             headers: {
                 Authorization: `Bearer tEOdJQPpkqhMr5iQswLX-vHYq5C4vy-C65X0EjO07sfTqX1QMQD-oLFApPj0h4SxJw5Jy6gh5YKsGE5OrjXpagmiwVXmluFUBtYm4f9o_kPGQ1FBTtgLVIuXYAtOY3Yx`,
                 Origin: 'localhost',
+                "Content-Type": "application/json",
                 withCredentials: true,
             }
         }).then(res => res.json())
         .then(json => {
-            console.log(json.reviews);
-            setReviews(json.reviews);
+            console.log("antes")
+            data = json.reviews;
         })
         .catch(err => console.error('error:' + err));    
+        setReviews(data);
+        console.log(data);
+        console.log(reviews);
     }
 
-    useEffect(() => { APIYelp() }, []);
+    useEffect(() => { 
+        APIYelp().then(console.log("reviews"));        
+    }, []);
 
     return (
         <div className="Container">
             YELP REVIEWS
             { !reviews && <p> VAZIO</p> }
-            {reviews && reviews.map((item, index) => {
+            {reviews?.map((item, index) => {
                 <div key={index}>
                     <p>{item.user.name}</p>
                     <p>{item.text}</p>
