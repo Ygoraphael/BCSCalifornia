@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 export default function Yelp() {
     const [reviews, setReviews] = useState([]);
+    const apiKey = process.env.API_SECRET;
+    console.log(apiKey)
     
     const APIYelp = async () => {
         fetch(`/Reviews`, {
