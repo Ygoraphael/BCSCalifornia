@@ -4,17 +4,30 @@ export default function Yelp() {
     const [reviews, setReviews] = useState([]);
     const apiKey = process.env.NEXT_PUBLIC_API_SECRET;
     
-    const APIYelp = async () => {
-        fetch(`/Reviews`, {
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
+    useEffect(() => {
+        const APIYelp = async () => {
+            try {
+                const response = await fetch(`/Reviews`, {
+                    headers: {
+                        Authorization: `Bearer ${apiKey}`,
+                    }
+                });
+                const json = await response.json();
+                setReviews(json.reviews);
+                setIsLoading(false); // Marque isLoading como false após o carregamento dos dados
+            } catch (error) {
+                console.error('error:', error);
             }
-        }).then(res => res.json())
-        .then(json => { setReviews(json.reviews) })
-        .catch(err => console.error('error:' + err));
-    }
+        };
 
-    useEffect(() => { APIYelp(); });
+        if (isLoading) {
+            APIYelp();
+        }
+    }, [apiKey]); // Remova isLoading do array de dependências
+
+    useEffect(() => {
+        setIsLoading(true); // Marque isLoading como true para iniciar a chamada à API
+    }, []); // Execute apenas na montagem do componente
 
     return (
         <div className="Container">
