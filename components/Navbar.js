@@ -13,11 +13,11 @@ export default function Navbar() {
           </span>
         </h1>
         <ul className={Styles.menu}>
-          <li> <Link href="/">Home</Link></li>
-          <li> <Link href="/services"><a>Services</a></Link></li>
-          <li> <Link href="/price"><a>Price and Booking</a></Link></li>
-          <li> <Link href="/yelp"><a>Yelp Reviews</a></Link></li>
-          <li> <Link href="/portfolio"><a>Portfolio</a></Link></li>
+          <li> <Link href="/" prefetch>Home</Link></li>
+          <li> <Link href="/services" prefetch>Services</Link></li>
+          <li> <Link href="/price">Price and Booking</Link></li>
+          <li> <Link href="/yelp">Yelp Reviews</Link></li>
+          <li> <Link href="/portfolio">Portfolio</Link></li>
         </ul>
       </nav>
 
