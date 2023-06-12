@@ -14,7 +14,7 @@ export default function Yelp() {
         .catch(err => console.error('error:' + err));
     }
 
-    useEffect(() => { APIYelp(); }, []);
+    useEffect(() => { APIYelp(); });
 
     return (
         <div className="Container">

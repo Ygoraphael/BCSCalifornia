@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import NextImage from 'next/image'
 import Styles from '../styles/navbar.module.css'
 import Logo from "../public/img/LogoSombra.png";
 
@@ -8,7 +9,7 @@ export default function Navbar() {
       <nav className={Styles.navbar}>
         <h1 className="logo">
           <span className="text-p">
-            <img src={Logo.src} width="150" height="50" alt="Broadway Clean Services" loading="lazy"/>
+              <NextImage src={Logo} width={150} height={50} alt="Broadway Clean Services" loading="lazy" />
             Broadway Clean Services
           </span>
         </h1>
