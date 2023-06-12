@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import NextImage from 'next/image'
-import Styles from '../styles/navbar.module.css'
+import Styles from '../styles/Navbar.module.css'
 import Logo from "../public/img/LogoSombra.png";
 
 export default function Navbar() {
@@ -10,7 +10,7 @@ export default function Navbar() {
         <h1 className="logo">
           <span className="text-p">
               <NextImage src={Logo} width={150} height={50} alt="Broadway Clean Services" loading="lazy" />
-            Broadway Clean Services
+              Broadway Clean Services
           </span>
         </h1>
         <ul className={Styles.menu}>
