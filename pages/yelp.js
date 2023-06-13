@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function Yelp() {
+function Yelp() {
     const [reviews, setReviews] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const apiKey = process.env.NEXT_PUBLIC_API_SECRET;
@@ -15,7 +15,7 @@ export default function Yelp() {
                 });
                 const json = await response.json();
                 setReviews(json.reviews);
-                setIsLoading(false); // Marque isLoading como false após o carregamento dos dados
+                setIsLoading(false);
             } catch (error) {
                 console.error('error:', error);
             }
@@ -24,11 +24,11 @@ export default function Yelp() {
         if (isLoading) {
             APIYelp();
         }
-    }, [apiKey]); // Remova isLoading do array de dependências
+    }, [apiKey, isLoading]);
 
     useEffect(() => {
-        setIsLoading(true); // Marque isLoading como true para iniciar a chamada à API
-    }, []); // Execute apenas na montagem do componente
+        setIsLoading(true); 
+    }, []);
 
     return (
         <div className="Container">
@@ -44,3 +44,5 @@ export default function Yelp() {
         </div>
     );
 }
+
+export default Yelp;

@@ -1,6 +1,6 @@
-import Styles from '../styles/Footer.module.css'
+import Styles from '../styles/Footer.module.css';
 
-export default function Footer() {
+function Footer() {
   return (
     <footer className={Styles.footer}>
       <p>
@@ -9,3 +9,5 @@ export default function Footer() {
     </footer>
   )
 }
+
+export default Footer;
