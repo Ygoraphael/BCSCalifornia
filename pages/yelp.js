@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 export default function Yelp() {
     const [reviews, setReviews] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const apiKey = process.env.NEXT_PUBLIC_API_SECRET;
     
     useEffect(() => {
