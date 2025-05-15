@@ -1,0 +1,243 @@
+/* Global Resets and New Theme Variables */
+:root {
+  --primary-dark: #1A1A1A; /* Or #222222 */
+  --accent-pink: #FF4081;
+  --accent-green: #ADFF2F;
+  --text-light: #F5F5F5;
+  --text-medium: #A0A0A0;
+  --text-dark: #333333; /* For elements on light backgrounds if any */
+  --font-primary: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-headings: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.7;
+  color: var(--text-light);
+  background-color: var(--primary-dark);
+}
+
+.App {
+  text-align: center;
+  background-color: var(--primary-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+  padding-top: 100px; /* Adjust based on final header height */
+}
+
+/* Header Styles - App.tsx inline styles will override some of these, but good for base */
+.App-header {
+  background-color: var(--primary-dark) !important; /* Ensure dark background */
+  border-bottom: 1px solid var(--accent-pink) !important; /* Pink accent border */
+}
+
+.App-header nav a.nav-link { /* Target the class added in App.tsx */
+  color: var(--text-light) !important;
+  transition: color 0.3s ease, transform 0.2s ease;
+  padding: 5px 0;
+  position: relative;
+}
+
+.App-header nav a.nav-link:hover {
+  color: var(--accent-pink) !important;
+  transform: translateY(-2px);
+}
+
+.App-header nav a.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--accent-green);
+  transition: width 0.3s ease;
+}
+
+.App-header nav a.nav-link:hover::after {
+  width: 100%;
+}
+
+
+/* General Section Styling */
+section {
+  padding: 60px 20px; /* Increased padding */
+  /* border-bottom: 1px solid #333; Darker, more subtle separator */
+}
+
+section:last-of-type {
+  border-bottom: none;
+}
+
+section h2 {
+  font-family: var(--font-headings);
+  font-size: 2.8em; /* Default for larger screens */
+  margin-bottom: 40px;
+  color: var(--text-light); /* Light text for headings */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+section h2 span { /* For highlighting parts of the title with accent color */
+  color: var(--accent-pink);
+}
+
+section p {
+  font-size: 1.1em;
+  color: var(--text-medium); /* Medium gray for paragraphs */
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.8;
+}
+
+/* Links within sections */
+a {
+  color: var(--accent-pink);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-green);
+}
+
+/* Buttons - General Styling (can be more specific with classes) */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  font-family: var(--font-headings);
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  border: none;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background-color: var(--accent-pink);
+  color: var(--primary-dark); /* Dark text on pink button for contrast */
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-green);
+  color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--accent-pink);
+  border: 2px solid var(--accent-pink);
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-pink);
+  color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+
+/* Responsive Typography and Layout */
+
+/* Tablet and larger */
+@media (min-width: 768px) {
+  section h2 {
+    font-size: 3.2em;
+  }
+  section p {
+    font-size: 1.2em;
+  }
+  .App-header nav a.nav-link {
+    margin: 0 20px !important; /* More spacing on larger screens */
+  }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 767px) {
+  .App-header {
+    padding: 15px !important; 
+  }
+  .App-header img {
+    height: 45px !important; /* Smaller logo on mobile */
+    margin-bottom: 10px !important;
+  }
+  .App-header nav {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+  .App-header nav a.nav-link {
+    margin: 10px 0 !important; 
+    font-size: 1.2em !important; /* Larger for easier tapping */
+  }
+  main {
+    padding-top: 160px !important; /* Adjust if header height changes significantly */
+  }
+  section {
+    padding: 40px 15px;
+  }
+  section h2 {
+    font-size: 2.2em; 
+  }
+  section p {
+    font-size: 1em; 
+  }
+
+  /* Adjust flex containers in sections for mobile */
+  #services > div,
+  #why-choose-us > div,
+  #reviews > div,
+  #portfolio > div {
+    flex-direction: column;
+    align-items: center;
+  }
+  #services > div > div, 
+  #why-choose-us > div > div, 
+  #reviews > div > div,
+  #portfolio > div > div 
+  {
+    flex-basis: 95% !important; 
+    max-width: 95% !important;
+    margin-bottom: 20px !important;
+  }
+
+  #home {
+    height: auto !important; 
+    min-height: calc(100vh - 160px); /* Adjust based on mobile header */
+    padding: 40px 15px;
+  }
+  #home h1 {
+    font-size: 2.2em !important;
+  }
+  #home p {
+    font-size: 1.1em !important;
+  }
+  #home a.btn-primary { /* Targeting the CTA button */
+    padding: 12px 25px !important;
+    font-size: 1em !important;
+  }
+  #home button { /* Carousel navigation buttons */
+    padding: 8px 10px !important;
+    font-size: 1.2em !important;
+    background-color: rgba(255, 64, 129, 0.5); /* Pinkish transparent */
+  }
+  #home button:hover {
+    background-color: rgba(255, 64, 129, 0.8);
+  }
+}
+
+/* Specific component styling will be handled in their respective files or here if general enough */
+
