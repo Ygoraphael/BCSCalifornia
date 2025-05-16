@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './App.css';
+import './App.css'; 
 import newLogo from './assets/logo_broadway_new.png';
 import ServicesSection from './components/ServicesSection';
 import ContactSection from './components/ContactSection';
