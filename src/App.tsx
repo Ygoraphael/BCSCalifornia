@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import newLogo from './assets/logo_broadway_new.png';
 import ServicesSection from './components/ServicesSection';
