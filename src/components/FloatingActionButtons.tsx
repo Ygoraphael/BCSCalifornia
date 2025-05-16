@@ -2,8 +2,8 @@ import React from 'react';
 import { MessageCircle, Instagram } from 'lucide-react'; // Using Youtube as a placeholder for TikTok if not directly available
 
 const FloatingActionButtons: React.FC = () => {
-  const whatsappLink = "https://wa.me/SEUNUMEROWHATSAPP"; // Substituir pelo número real
-  const instagramLink = "https://instagram.com/SEUPERFILINSTAGRAM"; // Substituir pelo perfil real
+  const whatsappLink = "https://wa.me/15102585722"; // Substituir pelo número real
+  const instagramLink = "https://instagram.com/broadwaycleanservices/"; // Substituir pelo perfil real
   const tiktokLink = "https://tiktok.com/@SEUPERFILTIKTOK"; // Substituir pelo perfil real
 
   const buttonStyle: React.CSSProperties = {
