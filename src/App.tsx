@@ -1,5 +1,6 @@
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import newLogo from './assets/logo_broadway_new.png'; // Updated logo import
+import newLogo from './assets/logo_broadway_new.png';
 import ServicesSection from './components/ServicesSection';
 import ContactSection from './components/ContactSection';
 import WhyChooseUsSection from './components/WhyChooseUsSection';
@@ -8,19 +9,18 @@ import CarouselSection from './components/CarouselSection';
 import PortfolioSection from './components/PortfolioSection';
 import FloatingActionButtons from './components/FloatingActionButtons';
 
-// Define color palette based on new logo and Tekever inspiration
 const colors = {
-  primaryDark: '#1A1A1A', // Very dark gray / black for background
-  accentPink: '#FF4081',  // Pink from logo (example, adjust to actual logo color)
-  accentGreen: '#ADFF2F', // Green from logo (example, adjust to actual logo color)
-  textLight: '#F5F5F5',   // Light gray / white for text on dark backgrounds
-  textMedium: '#A0A0A0',  // Medium gray for secondary text
+  primaryDark: '#1A1A1A',
+  accentPink: '#FF4081',
+  accentGreen: '#ADFF2F',
+  textLight: '#F5F5F5',
+  textMedium: '#A0A0A0',
 };
 
 const Footer = () => (
   <footer style={{
-    backgroundColor: colors.primaryDark, // Updated background
-    color: colors.textLight,          // Updated text color
+    backgroundColor: colors.primaryDark,
+    color: colors.textLight,
     textAlign: 'center',
     padding: '30px 20px',
     marginTop: '50px'
@@ -33,29 +33,55 @@ const Footer = () => (
 );
 
 function App() {
-  // Calculate new header height for main content padding
-  // Logo height 60px + padding top/bottom 10px*2 = 80px. Add a bit more for safety.
-  const headerHeight = 80; // Approximate new header height
-  const mainPaddingTop = headerHeight + 10; // e.g., 90px
+  const [isNavVisible, setNavVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const toggleNav = () => {
+    setNavVisible(!isNavVisible);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768) {
+        setNavVisible(true); // Mantém o nav visível em telas grandes
+      } else {
+        setNavVisible(false); // Oculta em telas menores
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const headerHeight = 80;
+  const mainPaddingTop = headerHeight + 10;
 
   return (
     <div className="App" style={{ backgroundColor: colors.primaryDark }}>
       <header className="App-header" style={{
         backgroundColor: colors.primaryDark,
-        padding: '10px 20px', // Reduced padding for a more compact header
+        padding: '10px 20px',
         color: colors.textLight,
-        // textAlign: 'center', // No longer needed if using flex
         boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
         position: 'sticky',
         top: '0',
         zIndex: 1000,
         borderBottom: `1px solid ${colors.accentPink}`,
-        display: 'flex', // Added for horizontal alignment
-        alignItems: 'center', // Vertically align items in the center
-        justifyContent: 'space-between' // Pushes logo to left, nav to right
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
       }}>
-        <img src={newLogo} alt="Broadway Clean Services New Logo" style={{ height: '60px', marginRight: '20px' /* Added margin for spacing if nav is close */ }} /> {/* Adjusted logo style */}
-        <nav>
+        <img src={newLogo} alt="Broadway Clean Services New Logo" style={{ height: '60px', marginRight: '20px' }} />
+        {isMobile && (
+          <button onClick={toggleNav} style={{ background: 'none', border: 'none', color: colors.textLight, fontSize: '1.5em' }}>
+            ☰
+          </button>
+        )}
+        <nav style={{ 
+          display: isMobile ? (isNavVisible ? 'flex' : 'none') : 'flex', 
+          flexDirection: isMobile ? 'column' : 'row' // Vertical em mobile, horizontal em desktop
+        }}>
           {[ 
             {label: "Home", href: "#home"},
             {label: "Services", href: "#services"},
@@ -70,8 +96,8 @@ function App() {
               className="nav-link"
               style={{ 
                 color: colors.textLight,
-                margin: '0 15px', 
-                textDecoration: 'none', 
+                margin: isMobile ? '10px 0' : '0 15px', // Ajuste de margem
+                textDecoration: 'none',
                 fontWeight: 'bold',
                 fontSize: '1.1em',
                 transition: 'color 0.3s ease'
@@ -82,7 +108,7 @@ function App() {
           ))}
         </nav>
       </header>
-      <main style={{ paddingTop: `${mainPaddingTop}px`, color: colors.textLight }}> 
+      <main style={{ paddingTop: `${mainPaddingTop}px`, color: colors.textLight }}>
         <CarouselSection /> 
         <ServicesSection />
         <WhyChooseUsSection />
@@ -97,4 +123,3 @@ function App() {
 }
 
 export default App;
-
