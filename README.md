@@ -37,7 +37,7 @@ Antes de começar, certifique-se de que tem o Node.js e o npm (ou pnpm) instalad
             ```bash
             pnpm run dev
             ```
-        *   Se estiver a usar npm:
+        *   Se estiver a usar npm: 
             ```bash
             npm run dev
             ```
