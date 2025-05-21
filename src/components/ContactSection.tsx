@@ -35,27 +35,41 @@ const ContactForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Basic validation (can be expanded)
-    if (formData.name && formData.email && formData.phone && formData.description) {
-      console.log('Form data submitted:', formData);
-      // Here you would typically send the data to a backend server
-      setSubmitted(true);
-      // Reset form after a delay (optional)
-      setTimeout(() => {
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          serviceType: '',
-          serviceDate: '',
-          serviceLocation: '',
-          description: '',
-        });
-        setSubmitted(false);
-      }, 3000);
-    } else {
-      alert('Please fill in all required fields.');
+    
+    // Validação dos campos obrigatórios
+    if (!formData.name || !formData.email || !formData.phone || !formData.description) {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
     }
+  
+    // Preparar o assunto do email
+    const subject = `Novo Pedido de Orçamento - ${formData.name}`;
+    
+    // Preparar o corpo do email formatado
+    const body = `
+      Nome: ${formData.name}
+      Email: ${formData.email}
+      Telefone: ${formData.phone}
+      Tipo de Serviço: ${formData.serviceType || 'Não especificado'}
+      Data Preferencial: ${formData.serviceDate || 'Não especificada'}
+      Localização: ${formData.serviceLocation || 'Não especificada'}
+      
+      Descrição do Serviço:
+      ${formData.description}
+    `;
+  
+    // Codificar para URL (remove quebras de linha e codifica caracteres especiais)
+    const encodedBody = encodeURIComponent(body.replace(/\n/g, '%0D%0A'));
+    const encodedSubject = encodeURIComponent(subject);
+  
+    // Abrir o cliente de email padrão do usuário
+    window.location.href = `mailto:raquelsantil@hotmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+  
+    // Mostrar mensagem de sucesso (opcional)
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 3000);
   };
 
   const inputStyle: React.CSSProperties = {
@@ -184,10 +198,10 @@ const ContactSection: React.FC = () => {
       <div style={{ marginTop: '50px', borderTop: `1px solid ${colors.cardBackground}`, paddingTop: '40px' }}>
         <h3 style={{ fontFamily: 'var(--font-headings)', color: colors.accentGreen, fontSize: '1.8em', marginBottom: '15px' }}>Or Contact Us Directly:</h3>
         <p style={{ color: colors.textMedium, fontSize: '1.1em', marginBottom: '10px' }}>
-          Email: <a href="mailto:contact@broadwaycleanservices.com" style={{ color: colors.accentPink }}>contact@broadwaycleanservices.com</a>
+          Email: <a href="mailto:broadwaycleanservices@gmail.com" style={{ color: colors.accentPink }}>broadwaycleanservices@gmail.com</a>
         </p>
         <p style={{ color: colors.textMedium, fontSize: '1.1em' }}>
-          Phone: <a href="tel:+15551234567" style={{ color: colors.accentPink }}>(555) 123-4567</a> (Example Number)
+          Phone: <a href="tel:+1 (510) 258-5722" style={{ color: colors.accentPink }}>+1 (510) 258-5722</a> (Example Number)
         </p>
       </div>
     </section>
