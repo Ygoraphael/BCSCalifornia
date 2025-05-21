@@ -33,43 +33,36 @@ const ContactForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Validação dos campos obrigatórios
-    if (!formData.name || !formData.email || !formData.phone || !formData.description) {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-      return;
+    try {
+      const response = await fetch("https://formspree.io/f/xeogwoey", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _replyto: formData.email, // Permite responder direto ao cliente
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          service_type: formData.serviceType,
+          date: formData.serviceDate,
+          location: formData.serviceLocation,
+          message: formData.description,
+          _subject: `Novo orçamento: ${formData.name}` // Assunto do email
+        }),
+      });
+  
+      if (response.ok) {
+        setSubmitted(true); // Mostra a mensagem de sucesso
+      } else {
+        alert("Erro ao enviar. Tente novamente.");
+      }
+    } catch (error) {
+      alert("Erro de conexão. Verifique sua rede.");
     }
-  
-    // Preparar o assunto do email
-    const subject = `Novo Pedido de Orçamento - ${formData.name}`;
-    
-    // Preparar o corpo do email formatado
-    const body = `
-      Nome: ${formData.name}
-      Email: ${formData.email}
-      Telefone: ${formData.phone}
-      Tipo de Serviço: ${formData.serviceType || 'Não especificado'}
-      Data Preferencial: ${formData.serviceDate || 'Não especificada'}
-      Localização: ${formData.serviceLocation || 'Não especificada'}
-      
-      Descrição do Serviço:
-      ${formData.description}
-    `;
-  
-    // Codificar para URL (remove quebras de linha e codifica caracteres especiais)
-    const encodedBody = encodeURIComponent(body.replace(/\n/g, '%0D%0A'));
-    const encodedSubject = encodeURIComponent(subject);
-  
-    // Abrir o cliente de email padrão do usuário
-    window.location.href = `mailto:raquelsantil@hotmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-  
-    // Mostrar mensagem de sucesso (opcional)
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 3000);
   };
 
   const inputStyle: React.CSSProperties = {
