@@ -38,8 +38,7 @@ interface HamburgerIconProps {
   toggleMenu: () => void;
 }
 
-// Hamburger Menu Icon Component
-const HamburgerIcon = ({ isOpen, toggleMenu }) => (
+const HamburgerIcon = ({ isOpen, toggleMenu }: HamburgerIconProps) => (
   <button 
     onClick={toggleMenu}
     className="hamburger-menu"
