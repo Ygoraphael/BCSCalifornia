@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import newLogo from './assets/logo_broadway_new.png'; // Updated logo import
 import ServicesSection from './components/ServicesSection';
@@ -32,6 +32,11 @@ const Footer = () => (
     </p>
   </footer>
 );
+
+interface HamburgerIconProps {
+  isOpen: boolean;
+  toggleMenu: () => void;
+}
 
 // Hamburger Menu Icon Component
 const HamburgerIcon = ({ isOpen, toggleMenu }) => (
