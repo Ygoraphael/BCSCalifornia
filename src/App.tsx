@@ -27,9 +27,6 @@ const Footer = () => (
     marginTop: '50px'
   }}>
     <p>&copy; {new Date().getFullYear()} Broadway Clean Services. All rights reserved.</p>
-    <p style={{ fontSize: '0.9em', marginTop: '10px', color: colors.textMedium }}>
-      Website developed by Manus AI
-    </p>
   </footer>
 );
 
