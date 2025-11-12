@@ -194,7 +194,7 @@ const ContactSection: React.FC = () => {
           Email: <a href="mailto:broadwaycleanservices@gmail.com" style={{ color: colors.accentPink }}>broadwaycleanservices@gmail.com</a>
         </p>
         <p style={{ color: colors.textMedium, fontSize: '1.1em' }}>
-          Phone: <a href="tel:+1 (510) 258-5722" style={{ color: colors.accentPink }}>+1 (510) 258-5722</a> (Example Number)
+          Phone: <a href="tel:+1 (510) 258-5722" style={{ color: colors.accentPink }}>+1 (510) 258-5722</a>
         </p>
       </div>
     </section>
