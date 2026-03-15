@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import './App.css';
-import newLogo from './assets/logo_broadway_new.png'; // Updated logo import
+import { Mail, Phone, MapPin } from 'lucide-react';
 import ServicesSection from './components/ServicesSection';
 import ContactSection from './components/ContactSection';
 import WhyChooseUsSection from './components/WhyChooseUsSection';
@@ -9,24 +8,87 @@ import CarouselSection from './components/CarouselSection';
 import PortfolioSection from './components/PortfolioSection';
 import FloatingActionButtons from './components/FloatingActionButtons';
 
-// Define color palette based on new logo and Tekever inspiration
+// Define master color palette for Clean & Modern theme
 const colors = {
-  primaryDark: '#1A1A1A', // Very dark gray / black for background
-  accentPink: '#FF4081',  // Pink from logo (example, adjust to actual logo color)
-  accentGreen: '#ADFF2F', // Green from logo (example, adjust to actual logo color)
-  textLight: '#F5F5F5',   // Light gray / white for text on dark backgrounds
-  textMedium: '#A0A0A0',  // Medium gray for secondary text
+  bgWhite: '#FFFFFF',
+  bgOffWhite: '#F8F9FA',
+  textHeader: '#1A1A1A',
+  textBody: '#4A4A4A',
+  accentRed: '#C54B43',
+  accentNavy: '#1A252F',
+  textLight: '#F5F5F5',
 };
+
 
 const Footer = () => (
   <footer style={{
-    backgroundColor: colors.primaryDark, // Updated background
-    color: colors.textLight,          // Updated text color
-    textAlign: 'center',
-    padding: '30px 20px',
-    marginTop: '50px'
+    backgroundColor: colors.accentNavy, // Consistent Dark Navy closure
+    color: colors.textLight,
+    padding: '80px 20px 40px',
+    textAlign: 'left'
   }}>
-    <p>&copy; {new Date().getFullYear()} Broadway Clean Services. All rights reserved.</p>
+    <div style={{
+      maxWidth: '1200px',
+      margin: '0 auto',
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '50px',
+      justifyContent: 'space-between'
+    }}>
+      {/* Column 1: Company */}
+      <div style={{ flex: '1 1 250px' }}>
+        <h3 style={{ color: '#fff', fontFamily: 'var(--font-headings)', fontSize: '1.4em', marginBottom: '20px' }}>Broadway Clean Services</h3>
+        <p style={{ lineHeight: '1.6', color: 'rgba(255,255,255,0.7)' }}>
+          Your trusted partner for a cleaner, healthier home in San Pablo, CA. We deliver professional cleaning solutions tailored to your lifestyle.
+        </p>
+      </div>
+
+      {/* Column 2: Contact Us */}
+      <div style={{ flex: '1 1 250px' }}>
+        <h3 style={{ color: '#fff', fontFamily: 'var(--font-headings)', fontSize: '1.4em', marginBottom: '20px' }}>Contact Us</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Mail size={18} color={colors.accentRed} />
+            <a href="mailto:contact@broadwayclean.com" style={{ color: colors.textLight, textDecoration: 'none' }}>contact@broadwayclean.com</a>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Phone size={18} color={colors.accentRed} />
+            <a href="tel:5551234567" style={{ color: colors.textLight, textDecoration: 'none' }}>(555) 123-4567</a>
+          </div>
+        </div>
+      </div>
+
+      {/* Column 3: Location */}
+      <div style={{ flex: '1 1 300px' }}>
+        <h3 style={{ color: '#fff', fontFamily: 'var(--font-headings)', fontSize: '1.4em', marginBottom: '20px' }}>Location</h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px' }}>
+          <MapPin size={18} color={colors.accentRed} />
+          <span style={{ color: colors.textLight }}>3400 Richmond Pkwy, San Pablo, CA 94806</span>
+        </div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3146.134612341!2d-122.328759!3d37.986933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808577f029c8f601%3A0x667218de0997a5ba!2sBroadway%20Clean%20Services!5e0!3m2!1sen!2sus!4v1710500000000!5m2!1sen!2sus"
+          width="100%"
+          height="160"
+          style={{ border: 0, borderRadius: '8px', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}
+          allowFullScreen={false}
+          loading="lazy"
+          title="Service Location"
+        ></iframe>
+      </div>
+    </div>
+
+    {/* Bottom Copyright */}
+    <div style={{
+      maxWidth: '1200px',
+      margin: '40px auto 0',
+      paddingTop: '20px',
+      borderTop: '1px solid rgba(255,255,255,0.1)',
+      textAlign: 'center'
+    }}>
+      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9em' }}>
+        &copy; {new Date().getFullYear()} Broadway Clean Services. All Rights Reserved.
+      </p>
+    </div>
   </footer>
 );
 
@@ -36,7 +98,7 @@ interface HamburgerIconProps {
 }
 
 const HamburgerIcon = ({ isOpen, toggleMenu }: HamburgerIconProps) => (
-  <button 
+  <button
     onClick={toggleMenu}
     className="hamburger-menu"
     aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -44,35 +106,47 @@ const HamburgerIcon = ({ isOpen, toggleMenu }: HamburgerIconProps) => (
       background: 'none',
       border: 'none',
       cursor: 'pointer',
-      display: 'none', // Hidden by default, shown in mobile via CSS
       padding: '10px',
-      zIndex: 1001
+      zIndex: 1100, // Higher than nav (1000)
+      position: 'relative',
+      width: '44px', // Standard touch target
+      height: '44px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     }}
   >
-    <div className={`hamburger-icon ${isOpen ? 'open' : ''}`}>
-      <span style={{ 
-        backgroundColor: colors.textLight,
+    <div style={{
+      width: '30px',
+      height: '24px',
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between'
+    }}>
+      <span style={{
+        backgroundColor: colors.textHeader,
         display: 'block',
         height: '2px',
-        margin: '6px 0',
+        width: '30px',
         transition: 'all 0.3s ease',
-        width: '30px'
+        transform: isOpen ? 'rotate(45deg) translate(7px, 7px)' : 'none'
       }}></span>
-      <span style={{ 
-        backgroundColor: colors.textLight,
+      <span style={{
+        backgroundColor: colors.textHeader,
         display: 'block',
         height: '2px',
-        margin: '6px 0',
+        width: '30px',
         transition: 'all 0.3s ease',
-        width: '30px'
+        opacity: isOpen ? 0 : 1
       }}></span>
-      <span style={{ 
-        backgroundColor: colors.textLight,
+      <span style={{
+        backgroundColor: colors.textHeader,
         display: 'block',
         height: '2px',
-        margin: '6px 0',
+        width: '30px',
         transition: 'all 0.3s ease',
-        width: '30px'
+        transform: isOpen ? 'rotate(-45deg) translate(8.5px, -8.5px)' : 'none'
       }}></span>
     </div>
   </button>
@@ -98,6 +172,18 @@ function App() {
     setIsMobile(window.innerWidth < 768);
   };
 
+  // Effect to handle scroll lock when mobile menu is open
+  useEffect(() => {
+    if (isMobile && isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen, isMobile]);
+
   // Effect to check viewport size on mount and resize
   useEffect(() => {
     checkIsMobile();
@@ -109,101 +195,142 @@ function App() {
 
   // Navigation items
   const navItems = [
-    {label: "Home", href: "#home"},
-    {label: "Services", href: "#services"},
-    {label: "Why Us", href: "#why-choose-us"}, 
-    {label: "Portfolio", href: "#portfolio"}, 
-    {label: "Reviews", href: "#reviews"}, 
-    {label: "Contact", href: "#contact"}
+    { label: "Home", href: "#home" },
+    { label: "Services", href: "#services" },
+    { label: "Why Us", href: "#why-choose-us" },
+    { label: "Portfolio", href: "#portfolio" },
+    { label: "Reviews", href: "#reviews" },
+    { label: "Contact", href: "#contact" }
   ];
 
   return (
-    <div className="App" style={{ backgroundColor: colors.primaryDark }}>
+    <div className="App" style={{ backgroundColor: colors.bgWhite }}>
       <header className="App-header" style={{
-        backgroundColor: colors.primaryDark,
-        padding: '10px 20px', // Reduced padding for a more compact header
-        color: colors.textLight,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        padding: '10px 20px',
+        color: colors.textHeader,
+        boxShadow: '0 1px 0 rgba(0,0,0,0.05)',
         position: 'sticky',
         top: '0',
         zIndex: 1000,
-        borderBottom: `1px solid ${colors.accentPink}`,
-        display: 'flex', // Added for horizontal alignment
-        alignItems: 'center', // Vertically align items in the center
-        justifyContent: 'space-between' // Pushes logo to left, nav to right
+        borderBottom: `1px solid rgba(0,0,0,0.05)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
       }}>
-        <img src={newLogo} alt="Broadway Clean Services New Logo" style={{ 
-          height: '60px', 
-          marginRight: '20px'
+        <img src="/assets/logo_broadway_new.png" alt="Broadway Clean Services - Professional Residential Cleaning in San Francisco" style={{
+          height: '60px',
+          flexShrink: 0
         }} />
-        
+
+        {/* Navigation Wrapper for centering */}
+        <div style={{
+          display: isMobile ? 'none' : 'flex',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <nav className="main-nav" style={{
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'all 0.3s ease',
+          }}>
+            {navItems.map(item => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="nav-link"
+                style={{
+                  color: colors.textHeader,
+                  margin: '0 20px',
+                  textDecoration: 'none',
+                  fontWeight: '600', // font-semibold
+                  fontSize: '1.05em',
+                  transition: 'color 0.3s ease', // transition-colors
+                  whiteSpace: 'nowrap'
+                }}
+                onMouseOver={(e) => (e.currentTarget.style.color = colors.accentRed)}
+                onMouseOut={(e) => (e.currentTarget.style.color = colors.textHeader)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+
         {/* Hamburger Menu Button (visible only on mobile) */}
         <HamburgerIcon isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
-        
-        {/* Navigation Menu */}
-        <nav className={`main-nav ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`} style={{
-          // Base styles
-          transition: 'all 0.3s ease',
-          
-          // Mobile styles (will be overridden by CSS media queries)
-          ...(isMobile && {
+
+        {/* Placeholder for balancing logo on desktop */}
+        {!isMobile && <div style={{ width: '160px', flexShrink: 0 }} />}
+
+        {/* Mobile Navigation Menu */}
+        {isMobile && (
+          <nav className={`main-nav ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`} style={{
             position: 'fixed',
             top: 0,
-            right: isMobileMenuOpen ? 0 : '-100%', // Slide in from right when open
+            right: isMobileMenuOpen ? 0 : '-100%',
             width: '70%',
             height: '100vh',
-            backgroundColor: colors.primaryDark,
+            backgroundColor: colors.bgWhite,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             padding: '20px',
-            boxShadow: '-5px 0 15px rgba(0,0,0,0.3)',
-            zIndex: 1000
-          })
-        }}>
-          {navItems.map(item => (
-            <a 
-              key={item.label}
-              href={item.href}
-              className="nav-link"
-              onClick={() => isMobile && setIsMobileMenuOpen(false)} // Close menu when link is clicked on mobile
-              style={{ 
-                color: colors.textLight,
-                margin: isMobile ? '15px 0' : '0 15px', // Vertical spacing on mobile, horizontal on desktop
-                textDecoration: 'none', 
-                fontWeight: 'bold',
-                fontSize: isMobile ? '1.3em' : '1.1em', // Larger font on mobile for easier tapping
-                transition: 'color 0.3s ease'
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        
-        {/* Overlay for mobile menu background */}
-        {isMobile && isMobileMenuOpen && (
-          <div 
-            className="mobile-menu-overlay"
-            onClick={() => setIsMobileMenuOpen(false)}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(0,0,0,0.7)',
-              zIndex: 999
-            }}
-          />
+            boxShadow: '-5px 0 15px rgba(0,0,0,0.05)',
+            zIndex: 1000,
+            transition: 'all 0.3s ease'
+          }}>
+            {navItems.map(item => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="nav-link"
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  color: colors.textHeader,
+                  margin: '15px 0',
+                  textDecoration: 'none',
+                  fontWeight: '600',
+                  fontSize: '1.3em',
+                  transition: 'color 0.3s ease'
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
         )}
+
       </header>
-      <main style={{ paddingTop: `${mainPaddingTop}px`, color: colors.textLight }}> 
-        <CarouselSection /> 
+      
+      {/* Overlay for mobile menu background - Moved outside header for reliability */}
+      {isMobile && isMobileMenuOpen && (
+        <div
+          className="mobile-menu-overlay"
+          onClick={() => setIsMobileMenuOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
+            zIndex: 999, // Below nav (1000)
+            cursor: 'pointer'
+          }}
+        />
+      )}
+      <main style={{ paddingTop: `${mainPaddingTop}px`, color: colors.textBody }}>
+        <CarouselSection />
         <ServicesSection />
         <WhyChooseUsSection />
-        <PortfolioSection /> 
+        <PortfolioSection />
         <ReviewsSection />
         <ContactSection />
       </main>

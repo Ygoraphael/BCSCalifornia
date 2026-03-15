@@ -1,0 +1,44 @@
+[
+  {
+    "titulo": "Modern Kitchen",
+    "descricao": "From a cluttered and greasy kitchen to a sparkling clean and hygienic cooking space.",
+    "imagem_antes": "/assets/portfolio/kitchen_before.jpg",
+    "imagem_depois": "/assets/portfolio/kitchen_after.jpg"
+  },
+  {
+    "titulo": "Refrigerator Deep Clean",
+    "descricao": "Complete disinfection and organization of refrigerator shelves and compartments.",
+    "imagem_antes": "/assets/portfolio/refrigerator_before.jpg",
+    "imagem_depois": "/assets/portfolio/refrigerator_after.jpg"
+  },
+  {
+    "titulo": "Door & Frame Detail",
+    "descricao": "Removing scuffs and dust from doors and frames to restore their original shine.",
+    "imagem_antes": "/assets/portfolio/door_before.jpg",
+    "imagem_depois": "/assets/portfolio/door_after.jpg"
+  },
+  {
+    "titulo": "Sparkling Sink",
+    "descricao": "Deep cleaning and polishing of stainless steel sinks and faucets.",
+    "imagem_antes": "/assets/portfolio/sink_before.jpg",
+    "imagem_depois": "/assets/portfolio/sink_after.jpg"
+  },
+  {
+    "titulo": "Professional Stove Cleaning",
+    "descricao": "Removing heavy grease and burnt-on food from stovetops and burners.",
+    "imagem_antes": "/assets/portfolio/stove_before.jpg",
+    "imagem_depois": "/assets/portfolio/stove_after.jpg"
+  },
+  {
+    "titulo": "Bedroom Transformation",
+    "descricao": "Turning a disorganized room into a clean, restful, and organized sanctuary.",
+    "imagem_antes": "/assets/portfolio/room_before.jpg",
+    "imagem_depois": "/assets/portfolio/room_after.jpg"
+  },
+  {
+    "titulo": "Bathroom Refresh",
+    "descricao": "Complete sanitization of bathroom sinks and surfaces for a fresh, clean feel.",
+    "imagem_antes": "/assets/portfolio/sinkbath_before.jpg",
+    "imagem_depois": "/assets/portfolio/sinkbath_after.jpg"
+  }
+]

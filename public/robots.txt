@@ -1,0 +1,23 @@
+# Bloqueia bots de IA conhecidos (ChatGPT, Claude, etc.)
+User-agent: GPTBot
+Disallow: /
+User-agent: ChatGPT-User
+Disallow: /
+User-agent: AnthropicAI
+Disallow: /
+User-agent: CCBot
+Disallow: /
+
+# Permite apenas o que é essencial para o Google e Bing
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+
+# Bloqueia o restante dos robôs de vasculharem pastas sensíveis
+User-agent: *
+Disallow: /private/
+Disallow: /config/
+Allow: /
+
+Sitemap: https://www.broadwaycleanservices.com/sitemap.xml

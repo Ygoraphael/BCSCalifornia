@@ -1,145 +1,251 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import googleReviews from '../data/google_data.json';
 
-// Color palette (can be imported from a central theme file in a larger app)
+// Theme Colors
 const colors = {
-  primaryDark: '#1A1A1A',
-  accentPink: '#FF4081',
-  accentGreen: '#ADFF2F',
-  textLight: '#F5F5F5',
-  textMedium: '#A0A0A0',
-  cardBackground: '#2C2C2C', // Slightly lighter than primaryDark for cards
-  starActive: '#FFD700', // Gold for active stars, good contrast on dark
-  starInactive: '#555555', // Darker gray for inactive stars
+  bgWhite: '#FFFFFF',
+  textHeader: '#1A1A1A',
+  textBody: '#4A4A4A',
+  accentRed: '#C54B43',
+  accentGold: '#FFD700',
+  textMedium: '#666666',
+  cardShadow: '0 4px 12px rgba(0,0,0,0.05)',
 };
 
-interface ReviewCardProps {
-  platform: string;
+interface Review {
+  id: string;
   author: string;
   rating: number;
   comment: string;
-  platformAccentColor: string; // Use a theme-consistent accent color
+  url?: string;
+  platform: 'Google' | 'Yelp';
 }
 
 const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
   const stars = [];
   for (let i = 0; i < 5; i++) {
     stars.push(
-      <span key={i} style={{ color: i < rating ? colors.starActive : colors.starInactive, fontSize: '1.4em', marginRight: '2px' }}>
+      <span key={i} style={{ 
+        color: i < rating ? colors.accentGold : '#E0E0E0', 
+        fontSize: '1.2em' 
+      }}>
         ★
       </span>
     );
   }
-  return <div style={{ marginBottom: '10px' }}>{stars}</div>;
+  return <div style={{ display: 'flex', gap: '2px' }}>{stars}</div>;
 };
 
-const ReviewCard: React.FC<ReviewCardProps> = ({ platform, author, rating, comment, platformAccentColor }) => (
-  <div style={{
-    backgroundColor: colors.cardBackground,
-    borderLeft: `4px solid ${platformAccentColor}`,
-    padding: '25px',
-    margin: '15px',
-    borderRadius: '8px',
-    flex: '1 1 320px',
-    maxWidth: '400px',
-    boxShadow: '0 5px 15px rgba(0,0,0,0.3)',
-    textAlign: 'left',
-    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-  }}
-  onMouseOver={(e) => {
-    e.currentTarget.style.transform = 'translateY(-5px)';
-    e.currentTarget.style.boxShadow = `0 8px 20px ${platformAccentColor === colors.accentPink ? 'rgba(255, 64, 129, 0.3)' : 'rgba(173, 255, 47, 0.2)'}`;
-  }}
-  onMouseOut={(e) => {
-    e.currentTarget.style.transform = 'translateY(0px)';
-    e.currentTarget.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
-  }}
-  >
-    <h3 style={{
-      marginTop: '0',
-      marginBottom: '10px',
-      color: platformAccentColor, 
-      fontFamily: 'var(--font-headings)', 
-      fontSize: '1.5em',
-      borderBottom: `1px solid ${colors.textMedium}`,
-      paddingBottom: '8px'
+const ReviewCard: React.FC<{ review: Review }> = ({ review }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const textLimit = 180;
+  const showReadMore = review.comment.length > textLimit;
+  const displayText = !isExpanded && showReadMore 
+    ? review.comment.substring(0, textLimit) + '...' 
+    : review.comment;
+
+  return (
+    <div style={{
+      backgroundColor: colors.bgWhite,
+      borderRadius: '12px',
+      padding: '30px',
+      marginBottom: '20px',
+      boxShadow: colors.cardShadow,
+      textAlign: 'left',
+      width: '100%',
+      maxWidth: '900px',
+      margin: '0 auto 20px',
+      border: '1px solid #EDEDED',
+      fontFamily: 'var(--font-primary, "Open Sans", sans-serif)'
     }}>
-      {platform} Review
-    </h3>
-    <StarRating rating={rating} />
-    <p style={{ fontStyle: 'italic', margin: '15px 0', color: colors.textLight, fontSize: '1em', lineHeight: '1.6' }}>"{comment}"</p>
-    <p style={{ textAlign: 'right', fontWeight: 'bold', color: colors.textMedium, fontFamily: 'var(--font-primary)', fontSize: '0.9em' }}>- {author}</p>
-  </div>
-);
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+        <h3 style={{ 
+          margin: 0, 
+          fontSize: '1.1em', 
+          fontWeight: 'bold', 
+          color: colors.textHeader,
+          fontFamily: 'var(--font-headings, "Montserrat", sans-serif)'
+        }}>
+          {review.author}
+        </h3>
+        <StarRating rating={review.rating} />
+      </div>
+      <p style={{ 
+        color: colors.textBody, 
+        lineHeight: '1.6', 
+        fontSize: '1em',
+        margin: 0 
+      }}>
+        "{displayText}"
+        {showReadMore && (
+          <button 
+            onClick={() => review.platform === 'Yelp' ? window.open(review.url, '_blank') : setIsExpanded(!isExpanded)}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              color: colors.accentRed, 
+              cursor: 'pointer', 
+              fontWeight: '600',
+              padding: '0 5px',
+              fontFamily: 'inherit'
+            }}
+          >
+            {review.platform === 'Yelp' ? 'Read More' : (isExpanded ? 'Show Less' : 'Read More')}
+          </button>
+        )}
+      </p>
+    </div>
+  );
+};
 
 const ReviewsSection = () => {
-  const reviews = [
-    {
-      platform: "Google",
-      author: "John D.",
-      rating: 5,
-      comment: "Broadway Clean Services did an amazing job on our office! The team was professional, punctual, and incredibly thorough. Our workspace has never looked better. Highly recommend!",
-      platformAccentColor: colors.accentGreen // Using theme green for Google
-    },
-    {
-      platform: "Yelp",
-      author: "Sarah L.",
-      rating: 5,
-      comment: "I hired them for a deep clean before moving into my new apartment, and I was blown away by the results. Every nook and cranny was spotless. Excellent service and great value!",
-      platformAccentColor: colors.accentPink // Using theme pink for Yelp
-    },
-    {
-      platform: "Google",
-      author: "Mike P.",
-      rating: 4,
-      comment: "Very happy with the regular cleaning service we receive for our home. They are reliable and always do a consistent job. Sometimes minor spots are missed but they are quick to rectify.",
-      platformAccentColor: colors.accentGreen
-    },
-    {
-      platform: "Yelp",
-      author: "Emily B.",
-      rating: 5,
-      comment: "Fantastic carpet cleaning service! Our old carpets look brand new again. The technician was friendly and very efficient. Will definitely use their services again.",
-      platformAccentColor: colors.accentPink
+  const [activeTab, setActiveTab] = useState<'Google' | 'Yelp'>('Yelp');
+  const [yelpReviews, setYelpReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (activeTab === 'Yelp' && yelpReviews.length === 0) {
+      const fetchYelp = async () => {
+        setLoading(true);
+        try {
+          const response = await fetch('/api/get-reviews');
+          if (response.ok) {
+            const data = await response.json();
+            setYelpReviews(data);
+          }
+        } catch (error) {
+          console.error("Yelp fetch error:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchYelp();
     }
-  ];
+  }, [activeTab, yelpReviews.length]);
+
+  const googleMapsUrl = "https://www.google.com/maps/place/Broadway+Clean+Services/@37.9869329,-122.3287592,820m/data=!3m2!1e3!4b1!4m6!3m5!1s0x808577f029c8f601:0x667218de0997a5ba!8m2!3d37.9869329!4d-122.3261789!16s%2Fg%2F11y0syzpgn?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D";
 
   return (
     <section id="reviews" style={{
-      padding: '60px 20px',
-      textAlign: 'center',
-      backgroundColor: '#222222', // Slightly different dark shade for variation
+      padding: '80px 20px',
+      backgroundColor: colors.bgWhite, 
+      textAlign: 'center'
     }}>
-      <h2 style={{
-        fontFamily: 'var(--font-headings)', 
-        fontSize: 'clamp(2.2em, 5vw, 3.2em)', 
-        marginBottom: '50px', 
-        color: colors.textLight
-      }}>
-        What Our <span style={{ color: colors.accentPink }}>Clients Say</span>
-      </h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
-        {reviews.map(review => (
-          <ReviewCard
-            key={`${review.platform}-${review.author}`}
-            platform={review.platform}
-            author={review.author}
-            rating={review.rating}
-            comment={review.comment}
-            platformAccentColor={review.platformAccentColor}
-          />
-        ))}
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <h2 style={{
+          fontFamily: 'var(--font-headings, "Montserrat", sans-serif)',
+          fontSize: 'clamp(2em, 5vw, 2.8em)',
+          color: colors.textHeader,
+          marginBottom: '15px'
+        }}>
+          What Our Clients Say
+        </h2>
+        <p style={{ 
+          color: colors.textBody, 
+          fontSize: '1.1em', 
+          marginBottom: '40px',
+          maxWidth: '800px',
+          margin: '0 auto 40px'
+        }}>
+          We pride ourselves on delivering exceptional service. Here's what people are saying about us.
+        </p>
+
+        {/* Tab Navigation */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          gap: '30px', 
+          marginBottom: '40px',
+          flexWrap: 'wrap'
+        }}>
+          {['Google', 'Yelp'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab as 'Google' | 'Yelp')}
+              style={{
+                padding: '10px 30px',
+                borderRadius: '25px',
+                border: 'none',
+                backgroundColor: activeTab === tab ? colors.accentRed : 'transparent',
+                color: activeTab === tab ? '#FFF' : colors.textMedium,
+                fontWeight: 'bold',
+                fontSize: '1.1em',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                fontFamily: 'var(--font-primary, "Open Sans", sans-serif)'
+              }}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* Reviews List */}
+        <div style={{ minHeight: '300px' }}>
+          {loading ? (
+            <div style={{ padding: '50px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                border: '3px solid #f3f3f3', 
+                borderTop: `3px solid ${colors.accentRed}`, 
+                borderRadius: '50%', 
+                animation: 'spin 1s linear infinite',
+                margin: '0 auto'
+              }} />
+              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+            </div>
+          ) : (
+            <>
+              {activeTab === 'Google' && (
+                googleReviews.map((r: any) => <ReviewCard key={r.id} review={{...r, platform: 'Google'}} />)
+              )}
+              {activeTab === 'Yelp' && (
+                yelpReviews.length > 0 ? (
+                  yelpReviews.map((r) => <ReviewCard key={r.id} review={r} />)
+                ) : (
+                  <div style={{ padding: '40px', color: colors.textBody }}>
+                    <p style={{ fontSize: '1.2em', marginBottom: '20px' }}>
+                      No reviews found on Yelp at the moment.
+                    </p>
+                    <a 
+                      href="https://www.yelp.com/biz/broadway-clean-services-richmond-6" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      style={{
+                        color: colors.accentRed,
+                        fontWeight: 'bold',
+                        textDecoration: 'underline'
+                      }}
+                    >
+                      Check our Yelp page directly
+                    </a>
+                  </div>
+                )
+              )}
+              
+              {activeTab === 'Google' && (
+                <div style={{ marginTop: '20px' }}>
+                  <a 
+                    href={googleMapsUrl} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    style={{
+                      color: colors.accentRed,
+                      fontWeight: 'bold',
+                      textDecoration: 'none',
+                      fontSize: '1.1em',
+                      borderBottom: `2px solid ${colors.accentRed}`
+                    }}
+                  >
+                    View more on Google Maps
+                  </a>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
-      <p style={{ 
-        marginTop: '50px',
-        fontSize: 'clamp(1em, 2vw, 1.1em)', 
-        color: colors.textMedium,
-        fontFamily: 'var(--font-primary)',
-        maxWidth: '700px',
-        marginLeft: 'auto',
-        marginRight: 'auto'
-      }}>
-        These are just a few examples of the positive feedback we receive. We strive for 100% customer satisfaction!
-      </p>
     </section>
   );
 };

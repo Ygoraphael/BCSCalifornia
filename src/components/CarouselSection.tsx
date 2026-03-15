@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-// Importar imagens do carrossel
-import carouselImage1 from '../assets/carousel/carousel_image_1.jpg';
-import carouselImage2 from '../assets/carousel/carousel_image_2.jpg';
-import carouselImage3 from '../assets/carousel/carousel_image_3.jpg';
+// Importar imagens do carrossel (agora da pasta public)
+const images = [
+  '/assets/carousel/carousel_image_1.jpg',
+  '/assets/carousel/carousel_image_2.jpg',
+  '/assets/carousel/carousel_image_3.jpg'
+];
 
-// Definir a paleta de cores para fácil acesso no componente, se necessário
-// Idealmente, estas viriam de um contexto de tema ou variáveis CSS globais
 const colors = {
-  primaryDark: '#1A1A1A',
-  accentPink: '#FF4081',
-  accentGreen: '#ADFF2F',
+  bgWhite: '#FFFFFF',
+  textHeader: '#1A1A1A',
+  textBody: '#4A4A4A',
+  accentRed: '#C54B43',
   textLight: '#F5F5F5',
 };
-
-const images = [carouselImage1, carouselImage2, carouselImage3];
 
 const CarouselSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -37,20 +36,21 @@ const CarouselSection: React.FC = () => {
   return (
     <section id="home" style={{
       position: 'relative',
-      height: 'calc(100vh - 100px)', // Ajustar altura considerando o novo header
+      height: 'calc(100vh - 100px)',
       minHeight: '450px',
       maxHeight: '650px',
       overflow: 'hidden',
       textAlign: 'center',
-      color: colors.textLight, // Usar cor de texto clara
+      color: colors.textHeader,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      // borderBottom: `1px solid ${colors.primaryDark}` // Borda mais escura ou remover
+      backgroundColor: colors.bgWhite
     }}>
       <img 
         src={images[currentIndex]} 
-        alt={`Broadway Clean Services - ${currentIndex + 1}`} 
+        alt={`Broadway Clean Services - Professional Cleaning in San Francisco - Image ${currentIndex + 1}`} 
+        decoding="async"
         style={{ 
           width: '100%', 
           height: '100%', 
@@ -59,7 +59,7 @@ const CarouselSection: React.FC = () => {
           top: 0,
           left: 0,
           zIndex: 1,
-          filter: 'brightness(0.7)' // Adiciona um leve escurecimento à imagem de fundo
+          filter: 'brightness(0.85)' // Less dark than before
         }} 
       />
       <div style={{
@@ -68,32 +68,41 @@ const CarouselSection: React.FC = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(26, 26, 26, 0.5)', // Overlay escuro mais forte para legibilidade
+        backgroundColor: 'rgba(255, 255, 255, 0.4)', // Light overlay instead of dark
         zIndex: 2
       }}></div>
 
       <div style={{ zIndex: 3, position: 'relative', padding: '20px' }}>
         <h1 style={{
-          fontFamily: 'var(--font-headings)', 
-          fontSize: 'clamp(2.5em, 5vw, 3.8em)', // Fonte responsiva
+          fontFamily: 'var(--font-headings, "Montserrat", sans-serif)', 
+          fontSize: 'clamp(2.5em, 5vw, 3.8em)',
           margin: '0 0 20px 0', 
-          color: colors.textLight, 
-          textShadow: '2px 2px 6px rgba(0,0,0,0.8)' 
+          color: colors.textHeader,
+          fontWeight: '800'
         }}>
-          BROADWAY <span style={{ color: colors.accentPink }}>CLEAN</span> SERVICES
+          BROADWAY <span style={{ color: colors.accentRed }}>CLEAN</span> SERVICES
         </h1>
         <p style={{
-          fontFamily: 'var(--font-primary)',
-          fontSize: 'clamp(1.1em, 2.5vw, 1.4em)', // Fonte responsiva
-          color: colors.textLight,
-          textShadow: '1px 1px 4px rgba(0,0,0,0.7)',
-          maxWidth: '600px',
-          margin: '0 auto 30px auto'
+          fontFamily: 'var(--font-primary, "Open Sans", sans-serif)',
+          fontSize: 'clamp(1.1em, 2.5vw, 1.4em)',
+          color: colors.textBody,
+          maxWidth: '650px',
+          margin: '0 auto 30px auto',
+          fontWeight: '500'
         }}>
           Your Trusted Partner for a Spotless, Modern, and Healthy Environment.
         </p>
-        {/* O botão agora usará classes CSS definidas em App.css */}
-        <a href="#contact" className="btn btn-primary">
+        <a href="#contact" className="btn btn-primary" style={{
+          backgroundColor: colors.accentRed,
+          border: 'none',
+          padding: '12px 30px',
+          borderRadius: '50px',
+          color: '#fff',
+          textDecoration: 'none',
+          fontWeight: 'bold',
+          display: 'inline-block',
+          boxShadow: '0 4px 15px rgba(197, 75, 67, 0.3)'
+        }}>
           Get a Free Quote
         </a>
       </div>
@@ -104,16 +113,25 @@ const CarouselSection: React.FC = () => {
         left: '15px',
         transform: 'translateY(-50%)',
         zIndex: 3,
-        background: `rgba(255, 64, 129, 0.3)`,
-        color: colors.textLight,
+        background: 'rgba(255, 255, 255, 0.8)',
+        color: colors.textHeader,
         border: 'none',
-        padding: '10px 12px',
+        padding: '12px',
         cursor: 'pointer',
         borderRadius: '50%',
-        fontSize: '1.8em',
-        lineHeight: '1',
-        transition: 'background-color 0.3s ease'
-      }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = `rgba(255, 64, 129, 0.6)`} onMouseOut={(e) => e.currentTarget.style.backgroundColor = `rgba(255, 64, 129, 0.3)`}>
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '1.5em',
+        transition: 'all 0.3s ease',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+      }} onMouseOver={(e) => {
+        e.currentTarget.style.backgroundColor = colors.accentRed;
+        e.currentTarget.style.color = '#fff';
+      }} onMouseOut={(e) => {
+        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+        e.currentTarget.style.color = colors.textHeader;
+      }}>
         &#10094;
       </button>
       <button onClick={goToNext} style={{
@@ -122,16 +140,25 @@ const CarouselSection: React.FC = () => {
         right: '15px',
         transform: 'translateY(-50%)',
         zIndex: 3,
-        background: `rgba(255, 64, 129, 0.3)`,
-        color: colors.textLight,
+        background: 'rgba(255, 255, 255, 0.8)',
+        color: colors.textHeader,
         border: 'none',
-        padding: '10px 12px',
+        padding: '12px',
         cursor: 'pointer',
         borderRadius: '50%',
-        fontSize: '1.8em',
-        lineHeight: '1',
-        transition: 'background-color 0.3s ease'
-      }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = `rgba(255, 64, 129, 0.6)`} onMouseOut={(e) => e.currentTarget.style.backgroundColor = `rgba(255, 64, 129, 0.3)`}>
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '1.5em',
+        transition: 'all 0.3s ease',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+      }} onMouseOver={(e) => {
+        e.currentTarget.style.backgroundColor = colors.accentRed;
+        e.currentTarget.style.color = '#fff';
+      }} onMouseOut={(e) => {
+        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+        e.currentTarget.style.color = colors.textHeader;
+      }}>
         &#10095;
       </button>
     </section>

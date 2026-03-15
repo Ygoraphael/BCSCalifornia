@@ -16,16 +16,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.7;
-  color: var(--text-light);
-  background-color: var(--primary-dark);
+  color: var(--text-dark);
+  background-color: #FFFFFF;
+  overflow-x: hidden;
 }
 
 .App {
   text-align: center;
-  background-color: var(--primary-dark);
+  background-color: #FFFFFF;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 main {
@@ -35,8 +37,8 @@ main {
 
 /* Header Styles - App.tsx inline styles will override some of these, but good for base */
 .App-header {
-  background-color: var(--primary-dark) !important; /* Ensure dark background */
-  border-bottom: 1px solid var(--accent-pink) !important; /* Pink accent border */
+  background-color: rgba(255, 255, 255, 0.8) !important; 
+  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
 }
 
 .App-header nav a.nav-link { /* Target the class added in App.tsx */
@@ -270,3 +272,114 @@ a:hover {
 }
 
 /* Specific component styling will be handled in their respective files or here if general enough */
+
+@keyframes pulse-soft {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+#reviews-carousel::-webkit-scrollbar { display: none; }
+
+@keyframes spin { 
+  0% { transform: rotate(0deg); } 
+  100% { transform: rotate(360deg); } 
+}
+
+.film-slide {
+  transition: all 0.5s ease-in-out;
+  transform: scale(0.85);
+  opacity: 0.4;
+}
+.film-slide.is-snapped {
+  transform: scale(1);
+  opacity: 1;
+}
+.film-slide-content {
+  transition: opacity 0.6s ease, max-height 0.6s ease;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+.film-slide.is-snapped .film-slide-content {
+  opacity: 1;
+  max-height: 500px;
+}
+.film-slide-item {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  height: 480px !important; /* Fixed height for card consistency */
+  display: flex;
+  flex-direction: column;
+}
+.film-slide.is-snapped .film-slide-item {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.film-slide.is-snapped .film-slide-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(255, 64, 129, 0.3);
+}
+.film-slide-image-container {
+  width: 100%;
+  height: 250px !important; /* Strictly enforced carousel image height */
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+}
+
+/* Expansion Mode Styles - Moved mostly to inline for reliability */
+#expansion-overlay {
+  animation: fadeInExpansion 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeInExpansion {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#expanded-card {
+  animation: zoomInExpansion 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes zoomInExpansion {
+  from { transform: scale(0.9); }
+  to { transform: scale(1); }
+}
+
+#close-expansion-btn:hover {
+  background-color: var(--accent-pink) !important;
+  transform: rotate(90deg);
+}
+
+.back-btn-final:hover {
+  background-color: var(--accent-green) !important;
+  color: var(--primary-dark) !important;
+}
+
+@media (max-width: 1024px) {
+  #expanded-card {
+    height: auto !important;
+    padding: 20px !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.film-slide-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block;
+}
+
+
+

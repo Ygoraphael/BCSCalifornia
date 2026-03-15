@@ -3,47 +3,45 @@ import { CheckCircle } from 'lucide-react'; // Example icon, can be changed
 
 // Color palette (can be imported from a central theme file in a larger app)
 const colors = {
-  primaryDark: '#1A1A1A',
-  accentPink: '#FF4081',
-  accentGreen: '#ADFF2F',
-  textLight: '#F5F5F5',
-  textMedium: '#A0A0A0',
-  cardBackground: '#2C2C2C', // Slightly lighter than primaryDark for cards
+  bgWhite: '#FFFFFF',
+  bgOffWhite: '#F8F9FA',
+  textHeader: '#1A1A1A',
+  textBody: '#4A4A4A',
+  accentRed: '#C54B43',
+  cardShadow: '0 4px 12px rgba(0,0,0,0.05)',
 };
 
 interface ServiceItemProps {
   title: string;
   description: string;
-  icon?: React.ReactNode; // Optional icon
+  icon?: React.ReactNode; 
 }
 
 const ServiceItem: React.FC<ServiceItemProps> = ({ title, description, icon }) => (
   <div style={{
-    backgroundColor: colors.cardBackground,
-    border: `1px solid ${colors.accentPink}`,
-    padding: '25px',
-    margin: '15px',
-    borderRadius: '10px',
-    flex: '1 1 300px', // Flex properties for responsiveness
-    maxWidth: '380px',
-    boxShadow: `0 5px 15px rgba(0,0,0,0.3)`,
+    backgroundColor: '#FFFFFF',
+    padding: '30px',
+    borderRadius: '15px',
+    width: '100%',
+    boxShadow: colors.cardShadow,
     textAlign: 'left',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    border: '1px solid #EDEDED'
   }} 
   onMouseOver={(e) => {
     e.currentTarget.style.transform = 'translateY(-5px)';
-    e.currentTarget.style.boxShadow = `0 8px 20px rgba(255, 64, 129, 0.3)` ; // Pink glow on hover
+    e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.08)';
   }}
   onMouseOut={(e) => {
     e.currentTarget.style.transform = 'translateY(0px)';
-    e.currentTarget.style.boxShadow = `0 5px 15px rgba(0,0,0,0.3)`;
+    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
   }}
   >
     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-      {icon || <CheckCircle size={30} color={colors.accentGreen} style={{ marginRight: '10px' }} />}
-      <h3 style={{ marginTop: '0', marginBottom: '0', color: colors.accentPink, fontSize: '1.4em', fontFamily: 'var(--font-headings)' }}>{title}</h3>
+      {icon || <CheckCircle size={30} color={colors.accentRed} style={{ marginRight: '10px' }} />}
+      <h3 style={{ marginTop: '0', marginBottom: '0', color: colors.textHeader, fontSize: '1.4em', fontFamily: 'var(--font-headings, "Montserrat", sans-serif)', fontWeight: 'bold' }}>{title}</h3>
     </div>
-    <p style={{ color: colors.textMedium, fontSize: '1em', lineHeight: '1.6' }}>{description}</p>
+    <p style={{ color: colors.textBody, fontSize: '1em', lineHeight: '1.6' }}>{description}</p>
   </div>
 );
 
@@ -77,19 +75,35 @@ const ServicesSection = () => {
 
   return (
     <section id="services" style={{
-      padding: '60px 20px',
+      padding: '80px 20px',
       textAlign: 'center',
-      backgroundColor: colors.primaryDark, // Consistent dark background
+      backgroundColor: colors.bgOffWhite, 
     }}>
       <h2 style={{
-        fontFamily: 'var(--font-headings)', 
+        fontFamily: 'var(--font-headings, "Montserrat", sans-serif)', 
         fontSize: 'clamp(2.2em, 5vw, 3.2em)', 
-        marginBottom: '50px', 
-        color: colors.textLight
+        marginBottom: '20px', 
+        color: colors.textHeader,
+        fontWeight: 'bold'
       }}>
-        Our <span style={{ color: colors.accentPink }}>Expert</span> Services
+        Our <span style={{ color: colors.accentRed }}>Expert</span> Services
       </h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
+      <p style={{
+        color: colors.textBody,
+        fontSize: '1.1em',
+        maxWidth: '700px',
+        margin: '0 auto 50px auto'
+      }}>
+        High-quality cleaning solutions tailored to your specific needs, ensuring a spotless environment every time.
+      </p>
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gap: '30px',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        justifyContent: 'center'
+      }}>
         {services.map(service => (
           <ServiceItem key={service.title} title={service.title} description={service.description} />
         ))}
