@@ -53,7 +53,7 @@ const ReviewCard: React.FC<{ review: Review }> = ({ review }) => {
       boxShadow: colors.cardShadow,
       textAlign: 'left',
       width: '100%',
-      maxWidth: '900px',
+      maxWidth: '1200px',
       margin: '0 auto 20px',
       border: '1px solid #EDEDED',
       fontFamily: 'var(--font-primary, "Open Sans", sans-serif)'
@@ -131,7 +131,7 @@ const ReviewsSection = () => {
       backgroundColor: colors.bgWhite, 
       textAlign: 'center'
     }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         <h2 style={{
           fontFamily: 'var(--font-headings, "Montserrat", sans-serif)',
           fontSize: 'clamp(2em, 5vw, 2.8em)',

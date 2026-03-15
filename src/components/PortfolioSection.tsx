@@ -1,9 +1,8 @@
-import React, { useState, useCallback } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useState, useCallback, useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import ClassNames from 'embla-carousel-class-names';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
 import portfolioData from '../../portfolio.json';
 
 // Images are now served from the public/assets directory
@@ -33,96 +32,118 @@ interface PortfolioItemProps {
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const PortfolioItem: React.FC<PortfolioItemProps> = ({ title, beforeImage, afterImage, description, onClick }) => (
+const PortfolioItem: React.FC<PortfolioItemProps & { isExpanded?: boolean }> = ({ title, beforeImage, afterImage, description, onClick, isExpanded }) => (
   <div
     className="film-slide-item"
     style={{
       backgroundColor: colors.bgWhite,
-      border: `1px solid ${colors.borderLight}`,
+      border: isExpanded ? 'none' : `1px solid ${colors.borderLight}`,
       borderRadius: '15px',
       margin: '0 auto',
-      padding: '25px',
+      padding: isExpanded ? '40px' : '20px',
       textAlign: 'center',
       width: '100%',
+      height: isExpanded ? '100%' : 'auto',
       cursor: 'pointer',
       transition: 'all 0.4s ease',
       display: 'flex',
       flexDirection: 'column',
-      height: window.innerWidth < 768 ? 'auto' : '480px',
+      minHeight: isExpanded ? '70vh' : '400px',
+      justifyContent: 'center',
       overflow: 'hidden',
-      boxShadow: colors.cardShadow
+      boxShadow: isExpanded ? 'none' : colors.cardShadow
     }}
     onClick={onClick}
     onMouseOver={(e) => {
-      e.currentTarget.style.transform = 'translateY(-5px)';
-      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+      if (!isExpanded) {
+        e.currentTarget.style.transform = 'scale(1.02)';
+        e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.12)';
+        e.currentTarget.style.borderColor = colors.accentRed;
+      }
     }}
     onMouseOut={(e) => {
-      e.currentTarget.style.transform = 'translateY(0px)';
-      e.currentTarget.style.boxShadow = colors.cardShadow;
+      if (!isExpanded) {
+        e.currentTarget.style.transform = 'scale(1)';
+        e.currentTarget.style.boxShadow = colors.cardShadow;
+        e.currentTarget.style.borderColor = colors.borderLight;
+      }
     }}
   >
-    {/* Labels Section */}
-    <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '8px', height: '24px', flexShrink: 0 }}>
-      <div style={{ flex: '1 1 45%' }}>
-        <h4 style={{ color: colors.textBody, fontFamily: 'var(--font-headings, Montserrat, sans-serif)', fontSize: '0.9em', margin: 0, fontWeight: 'bold' }}>BEFORE</h4>
-      </div>
-      <div style={{ flex: '1 1 45%' }}>
-        <h4 style={{ color: colors.accentRed, fontFamily: 'var(--font-headings, Montserrat, sans-serif)', fontSize: '0.9em', margin: 0, fontWeight: 'bold' }}>AFTER</h4>
-      </div>
-    </div>
-
-    {/* Images Section */}
+    {/* Images with Labels Grouped */}
     <div style={{ 
       display: 'flex', 
-      flexDirection: window.innerWidth < 768 ? 'column' : 'row',
-      justifyContent: 'space-around', 
+      flexDirection: 'row', 
+      justifyContent: 'center', 
       alignItems: 'center', 
-      gap: '15px', 
-      marginBottom: '15px', 
-      height: window.innerWidth < 768 ? 'auto' : '250px', 
-      flexShrink: 0 
+      gap: isExpanded ? '30px' : '15px', 
+      marginBottom: isExpanded ? '30px' : '15px',
+      width: '100%',
+      flex: 1
     }}>
-      <div style={{ flex: '1 1 45%', minWidth: '0', height: window.innerWidth < 768 ? '180px' : '100%', width: window.innerWidth < 768 ? '100%' : 'auto' }}>
-        <div className="film-slide-image-container" style={{ border: `1px solid ${colors.borderLight}`, borderRadius: '8px', height: '100%', margin: 0, overflow: 'hidden' }}>
-          <img src={beforeImage} alt={`Cleaning transformation - Before - ${title}`} loading="lazy" decoding="async" className="film-slide-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      {/* Before Group */}
+      <div style={{ flex: '1 1 48%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <h4 style={{ 
+          color: colors.textBody, 
+          fontFamily: 'var(--font-headings, Montserrat, sans-serif)', 
+          fontSize: isExpanded ? '1.2em' : '0.85em', 
+          margin: 0, 
+          fontWeight: 'bold',
+          textAlign: 'center',
+          letterSpacing: '0.1em'
+        }}>BEFORE</h4>
+        <div className="film-slide-image-container" style={{ 
+          border: `1px solid ${colors.borderLight}`, 
+          borderRadius: '12px', 
+          width: '100%', 
+          aspectRatio: '4/3',
+          overflow: 'hidden',
+          boxShadow: isExpanded ? '0 10px 30px rgba(0,0,0,0.1)' : 'none'
+        }}>
+          <img src={beforeImage} alt={`Before - ${title}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
       </div>
-      <div style={{ flex: '1 1 45%', minWidth: '0', height: window.innerWidth < 768 ? '180px' : '100%', width: window.innerWidth < 768 ? '100%' : 'auto' }}>
-        <div className="film-slide-image-container" style={{ border: `2px solid ${colors.accentRed}`, borderRadius: '8px', height: '100%', margin: 0, overflow: 'hidden' }}>
-          <img src={afterImage} alt={`Cleaning transformation - After - ${title}`} loading="lazy" decoding="async" className="film-slide-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+
+      {/* After Group */}
+      <div style={{ flex: '1 1 48%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <h4 style={{ 
+          color: colors.accentRed, 
+          fontFamily: 'var(--font-headings, Montserrat, sans-serif)', 
+          fontSize: isExpanded ? '1.2em' : '0.85em', 
+          margin: 0, 
+          fontWeight: 'bold',
+          textAlign: 'center',
+          letterSpacing: '0.1em'
+        }}>AFTER</h4>
+        <div className="film-slide-image-container" style={{ 
+          border: `2px solid ${colors.accentRed}`, 
+          borderRadius: '12px', 
+          width: '100%', 
+          aspectRatio: '4/3', 
+          overflow: 'hidden',
+          boxShadow: isExpanded ? '0 10px 30px rgba(197, 75, 67, 0.2)' : 'none'
+        }}>
+          <img src={afterImage} alt={`After - ${title}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
       </div>
     </div>
 
-    {/* Description Section - Remaining Height */}
-    <div className="film-slide-content" style={{
-      textAlign: 'center',
-      width: '100%',
-      flexGrow: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      overflow: 'hidden'
-    }}>
+    {/* Content Section */}
+    <div className="film-slide-content" style={{ textAlign: 'center', marginTop: isExpanded ? '20px' : '0' }}>
       {title && <h3 style={{
         fontFamily: 'var(--font-headings, Montserrat, sans-serif)',
-        fontSize: '1.4em',
+        fontSize: isExpanded ? '1.8em' : '1.2em',
         color: colors.textHeader,
-        marginBottom: '8px',
-        marginTop: '0',
-        fontWeight: 'bold',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis'
+        marginBottom: '10px',
+        fontWeight: 'bold'
       }}>{title}</h3>}
       {description && <p style={{
-        fontSize: '0.95em',
+        fontSize: isExpanded ? '1.1em' : '0.9em',
         lineHeight: '1.6',
         color: colors.textBody,
         margin: '0 auto',
+        maxWidth: isExpanded ? '800px' : '100%',
         display: '-webkit-box',
-        WebkitLineClamp: 3,
+        WebkitLineClamp: isExpanded ? 3 : 2,
         WebkitBoxOrient: 'vertical',
         overflow: 'hidden'
       }}>{description}</p>}
@@ -138,164 +159,24 @@ interface PortfolioItemData {
   description: string;
 }
 
-interface ExpansionOverlayProps {
-  item: PortfolioItemData | null;
-  onClose: () => void;
-}
-
-const ExpansionOverlay: React.FC<ExpansionOverlayProps> = ({ item, onClose }) => {
-  if (!item) return null;
-
-  return createPortal(
-    <div
-      id="expansion-overlay"
-      onClick={onClose}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.85)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 9999999,
-        backdropFilter: 'blur(10px)',
-        padding: '20px'
-      }}
-    >
-      <div
-        id="expanded-card"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          backgroundColor: colors.bgWhite,
-          width: '95vw',
-          maxWidth: '1400px',
-          height: 'min-content',
-          maxHeight: '95vh',
-          borderRadius: '20px',
-          padding: '40px',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
-          overflowY: 'auto'
-        }}
-      >
-        <button
-          id="close-expansion-btn"
-          onClick={onClose}
-          aria-label="Close"
-          style={{
-            position: 'absolute',
-            top: '20px',
-            right: '20px',
-            background: colors.bgOffWhite,
-            border: `1px solid ${colors.borderLight}`,
-            color: colors.textHeader,
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            zIndex: 100,
-            transition: 'all 0.3s ease'
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.backgroundColor = colors.accentRed;
-            e.currentTarget.style.color = '#fff';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.backgroundColor = colors.bgOffWhite;
-            e.currentTarget.style.color = colors.textHeader;
-          }}
-        >
-          <X size={24} />
-        </button>
-
-        {/* Side-by-Side Images Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: window.innerWidth < 768 ? '1fr' : '1fr 1fr',
-          gap: '30px',
-          marginBottom: '30px'
-        }}>
-          {/* Before Container */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h4 style={{ color: colors.textBody, fontFamily: 'var(--font-headings, Montserrat, sans-serif)', fontSize: '1.2em', marginBottom: '15px', fontWeight: 'bold' }}>BEFORE</h4>
-            <div style={{
-              width: '100%',
-              backgroundColor: colors.bgOffWhite,
-              borderRadius: '12px',
-              overflow: 'hidden',
-              border: `1px solid ${colors.borderLight}`
-            }}>
-              <img
-                src={item.beforeImage}
-                alt={`Detailed transformation - Before - ${item.title}`}
-                loading="lazy"
-                decoding="async"
-                style={{ width: '100%', height: 'auto', maxHeight: '60vh', objectFit: 'contain' }}
-              />
-            </div>
-          </div>
-
-          {/* After Container */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h4 style={{ color: colors.accentRed, fontFamily: 'var(--font-headings, Montserrat, sans-serif)', fontSize: '1.2em', marginBottom: '15px', fontWeight: 'bold' }}>AFTER</h4>
-            <div style={{
-              width: '100%',
-              backgroundColor: colors.bgOffWhite,
-              borderRadius: '12px',
-              overflow: 'hidden',
-              border: `2px solid ${colors.accentRed}`
-            }}>
-              <img
-                src={item.afterImage}
-                alt={`Detailed transformation - After - ${item.title}`}
-                loading="lazy"
-                decoding="async"
-                style={{ width: '100%', height: 'auto', maxHeight: '60vh', objectFit: 'contain' }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Info Section */}
-        <div style={{ textAlign: 'center' }}>
-          <h2 style={{
-            fontFamily: 'var(--font-headings, Montserrat, sans-serif)',
-            fontSize: 'clamp(1.8em, 4vw, 2.8em)',
-            color: colors.textHeader,
-            marginBottom: '15px',
-            marginTop: 0,
-            fontWeight: 'bold'
-          }}>
-            {item.title}
-          </h2>
-          <p style={{
-            color: colors.textBody,
-            fontSize: '1.1em',
-            lineHeight: '1.6',
-            maxWidth: '900px',
-            margin: '0 auto'
-          }}>
-            {item.description}
-          </p>
-        </div>
-      </div>
-    </div>,
-    document.body
-  );
-};
+// ExpansionOverlay removed as requested - using in-place zoom instead
 
 
 const PortfolioSection: React.FC = () => {
-  const [expandedItem, setExpandedItem] = useState<PortfolioItemData | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+
+  // Lock body scroll when expanded
+  useEffect(() => {
+    if (isExpanded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isExpanded]);
 
   // Embla Carousel hook - film roll settings
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -337,13 +218,6 @@ const PortfolioSection: React.FC = () => {
     afterImage: getImageUrl(item.imagem_depois)
   }));
 
-  const handleItemClick = (item: PortfolioItemData, index: number) => {
-    if (emblaApi?.selectedScrollSnap() === index) {
-      setExpandedItem(item);
-    } else {
-      emblaApi?.scrollTo(index);
-    }
-  };
 
   return (
     <section
@@ -352,7 +226,8 @@ const PortfolioSection: React.FC = () => {
         padding: '80px 0',
         textAlign: 'center',
         backgroundColor: colors.bgWhite,
-        overflow: 'hidden'
+        overflow: isExpanded ? 'visible' : 'hidden', // Allow transition components to be visible
+        position: 'relative'
       }}
       onMouseEnter={() => {
         setIsHovering(true);
@@ -385,111 +260,184 @@ const PortfolioSection: React.FC = () => {
         Take a look at some of our recent work. We take pride in every space we clean and transform.
       </p>
 
-      {/* Carousel Container */}
-      <div style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative' }}>
-        <div className="embla" ref={emblaRef} style={{ overflow: 'hidden', padding: '20px 0' }}>
-          <div className="embla__container" style={{ display: 'flex', touchAction: 'pan-y pinch-zoom', alignItems: 'center' }}>
+      {/* Backdrop Overlay */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          zIndex: 9998,
+          visibility: isExpanded ? 'visible' : 'hidden',
+          opacity: isExpanded ? 1 : 0,
+          transition: 'all 0.4s ease-in-out',
+          backdropFilter: 'blur(8px)'
+        }}
+        onClick={() => setIsExpanded(false)}
+      />
+
+      {/* Center Wrapper for Expanded mode */}
+      <div
+        style={{
+          position: isExpanded ? 'fixed' : 'relative',
+          top: isExpanded ? '5vh' : 'auto',
+          left: isExpanded ? '5vw' : 'auto',
+          width: isExpanded ? '90vw' : '100%',
+          height: isExpanded ? '90vh' : 'auto',
+          maxWidth: isExpanded ? 'none' : '1000px',
+          margin: isExpanded ? '0' : '0 auto',
+          zIndex: 9999,
+          backgroundColor: isExpanded ? colors.bgWhite : 'transparent',
+          borderRadius: isExpanded ? '20px' : '0',
+          boxShadow: isExpanded ? '0 0 50px rgba(0,0,0,0.5)' : 'none',
+          transition: 'all 0.5s ease-in-out',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: !isExpanded ? 'zoom-in' : 'auto'
+        }}
+        onClick={() => { if (!isExpanded) setIsExpanded(true); }}
+      >
+        {/* Close Button UI */}
+        {isExpanded && (
+          <button
+            onClick={(e) => { 
+                e.stopPropagation(); 
+                setIsExpanded(false); 
+                // Restore focus to current slide center after closing
+                setTimeout(() => emblaApi?.reInit(), 500);
+            }}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              background: 'rgba(255,255,255,0.9)',
+              border: 'none',
+              color: colors.accentRed,
+              width: '44px',
+              height: '44px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 1010,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+            }}
+          >
+            <X size={28} />
+          </button>
+        )}
+
+        <div className="embla" ref={emblaRef} style={{
+          overflow: 'hidden',
+          width: '100%',
+          padding: isExpanded ? '0' : '20px 0'
+        }}>
+          <div className="embla__container" style={{
+            display: 'flex',
+            touchAction: 'pan-y pinch-zoom',
+            alignItems: 'center',
+            height: isExpanded ? '100%' : 'auto'
+          }}>
             {portfolioItems.map((item, index) => (
-                <div
+              <div
                 className="embla__slide film-slide"
                 key={item.id}
                 style={{
-                  flex: window.innerWidth < 768 ? '0 0 95%' : '0 0 70%',
+                  flex: isExpanded ? '0 0 100%' : '0 0 75%', 
                   minWidth: 0,
-                  paddingLeft: '15px',
-                  paddingRight: '15px',
+                  transform: 'translate3d(0, 0, 0)',
+                  paddingLeft: isExpanded ? '0' : '15px',
+                  paddingRight: isExpanded ? '0' : '15px',
+                  opacity: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: isExpanded ? '100%' : 'auto'
                 }}
               >
-                <PortfolioItem
-                  title={item.title}
-                  beforeImage={item.beforeImage}
-                  afterImage={item.afterImage}
-                  description={item.description}
-                  onClick={() => handleItemClick(item, index)}
-                />
+                <div style={{ 
+                  width: '100%', 
+                  maxWidth: isExpanded ? '1200px' : '100%',
+                  height: isExpanded ? '100%' : 'auto',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <PortfolioItem
+                    title={item.title}
+                    beforeImage={item.beforeImage}
+                    afterImage={item.afterImage}
+                    description={item.description}
+                    isExpanded={isExpanded}
+                    onClick={() => {
+                      if (!isExpanded) {
+                        setIsExpanded(true);
+                        emblaApi?.scrollTo(index);
+                      }
+                    }}
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows inside centered wrapper */}
         <button
           onClick={scrollPrev}
           style={{
             position: 'absolute',
-            left: '2%',
+            left: isExpanded ? '0' : '2%',
             top: '50%',
             transform: 'translateY(-50%)',
-            zIndex: 10,
-            background: colors.bgWhite,
-            border: `1px solid ${colors.borderLight}`,
+            zIndex: 1002,
+            background: 'rgba(255,255,255,0.8)',
+            border: 'none',
             color: colors.accentRed,
             borderRadius: '50%',
-            width: '50px',
-            height: '50px',
+            width: '44px',
+            height: '44px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
             boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            transition: 'all 0.3s ease',
-            opacity: isHovering ? 1 : 0.4
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.background = colors.accentRed;
-            e.currentTarget.style.color = '#fff';
-            e.currentTarget.style.borderColor = colors.accentRed;
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.background = colors.bgWhite;
-            e.currentTarget.style.color = colors.accentRed;
-            e.currentTarget.style.borderColor = colors.borderLight;
+            opacity: isExpanded ? 0.9 : (isHovering ? 1 : 0.4)
           }}
         >
-          <ChevronLeft size={30} />
+          <ChevronLeft size={28} />
         </button>
 
         <button
           onClick={scrollNext}
           style={{
             position: 'absolute',
-            right: '2%',
+            right: isExpanded ? '0' : '2%',
             top: '50%',
             transform: 'translateY(-50%)',
-            zIndex: 10,
-            background: colors.bgWhite,
-            border: `1px solid ${colors.borderLight}`,
+            zIndex: 1002,
+            background: 'rgba(255,255,255,0.8)',
+            border: 'none',
             color: colors.accentRed,
             borderRadius: '50%',
-            width: '50px',
-            height: '50px',
+            width: '44px',
+            height: '44px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
             boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            transition: 'all 0.3s ease',
-            opacity: isHovering ? 1 : 0.4
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.background = colors.accentRed;
-            e.currentTarget.style.color = '#fff';
-            e.currentTarget.style.borderColor = colors.accentRed;
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.background = colors.bgWhite;
-            e.currentTarget.style.color = colors.accentRed;
-            e.currentTarget.style.borderColor = colors.borderLight;
+            opacity: isExpanded ? 0.9 : (isHovering ? 1 : 0.4)
           }}
         >
-          <ChevronRight size={30} />
+          <ChevronRight size={28} />
         </button>
       </div>
-
-      <ExpansionOverlay
-        item={expandedItem}
-        onClose={() => setExpandedItem(null)}
-      />
     </section>
   );
 };

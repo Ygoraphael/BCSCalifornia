@@ -105,7 +105,7 @@ const WhyChooseUsSection = () => {
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
         gap: '30px',
-        maxWidth: '1200px',
+        maxWidth: '1400px',
         margin: '0 auto',
         justifyContent: 'center'
       }}>

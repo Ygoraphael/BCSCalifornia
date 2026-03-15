@@ -15,7 +15,7 @@ export default async (req, res) => {
     return
   }
 
-  const YELP_API_KEY = process.env.YELP_API_KEY;
+  const YELP_API_KEY = process.env.NEXT_PUBLIC_API_SECRET;
   const businessId = 'broadway-clean-services-richmond-6';
 
   if (!YELP_API_KEY) {
