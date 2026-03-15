@@ -39,7 +39,7 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
 const ReviewCard: React.FC<{ review: Review }> = ({ review }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const textLimit = 180;
-  const showReadMore = review.comment.length > textLimit;
+  const showReadMore = review.comment.length > textLimit || review.platform === 'Yelp';
   const displayText = !isExpanded && showReadMore 
     ? review.comment.substring(0, textLimit) + '...' 
     : review.comment;

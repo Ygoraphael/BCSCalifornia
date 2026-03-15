@@ -103,7 +103,7 @@ const WhyChooseUsSection = () => {
       </p>
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
         gap: '30px',
         maxWidth: '1400px',
         margin: '0 auto',
