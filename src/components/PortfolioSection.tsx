@@ -225,7 +225,7 @@ const PortfolioSection: React.FC = () => {
       style={{
         padding: '80px 0',
         textAlign: 'center',
-        backgroundColor: colors.bgWhite,
+        backgroundColor: colors.bgOffWhite,
         overflow: isExpanded ? 'visible' : 'hidden', // Allow transition components to be visible
         position: 'relative'
       }}
