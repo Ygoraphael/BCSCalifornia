@@ -15,13 +15,13 @@ const getImageUrl = (jsonPath: string) => {
 
 // Color palette
 const colors = {
-  bgWhite: '#FFFFFF',
-  bgOffWhite: '#F8F9FA',
-  textHeader: '#1A1A1A',
-  textBody: '#4A4A4A',
-  accentRed: '#C54B43',
-  cardShadow: '0 4px 12px rgba(0,0,0,0.05)',
-  borderLight: '#EDEDED'
+  bgWhite: 'var(--bg-white)',
+  bgOffWhite: 'var(--bg-off-white)',
+  textHeader: 'var(--text-header)',
+  textBody: 'var(--text-body)',
+  accentRed: 'var(--accent-red)',
+  cardShadow: 'var(--card-shadow)',
+  borderLight: 'var(--card-border)'
 };
 
 interface PortfolioItemProps {
@@ -314,7 +314,7 @@ const PortfolioSection: React.FC = () => {
               position: 'absolute',
               top: '20px',
               right: '20px',
-              background: 'rgba(255,255,255,0.9)',
+              background: 'var(--card-bg)',
               border: 'none',
               color: colors.accentRed,
               width: '44px',

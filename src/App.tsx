@@ -7,16 +7,18 @@ import ReviewsSection from './components/ReviewsSection';
 import CarouselSection from './components/CarouselSection';
 import PortfolioSection from './components/PortfolioSection';
 import FloatingActionButtons from './components/FloatingActionButtons';
+import ThemeToggle from './components/ThemeToggle';
 
 // Define master color palette for Clean & Modern theme
+// Define master color palette - updated to use CSS variables
 const colors = {
-  bgWhite: '#FFFFFF',
-  bgOffWhite: '#F8F9FA',
-  textHeader: '#1A1A1A',
-  textBody: '#4A4A4A',
-  accentRed: '#C54B43',
-  accentNavy: '#1A252F',
-  textLight: '#F5F5F5',
+  bgWhite: 'var(--bg-white)',
+  bgOffWhite: 'var(--bg-off-white)',
+  textHeader: 'var(--text-header)',
+  textBody: 'var(--text-body)',
+  accentRed: 'var(--accent-red)',
+  accentNavy: 'var(--accent-navy)',
+  textLight: 'var(--text-light)',
 };
 
 
@@ -49,7 +51,7 @@ const Footer = () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Mail size={18} color={colors.accentRed} />
-            <a href="mailto:contact@broadwayclean.com" style={{ color: colors.textLight, textDecoration: 'none' }}>contact@broadwayclean.com</a>
+            <a href="mailto:broadwaycleanservices@gmail.com" style={{ color: colors.textLight, textDecoration: 'none' }}>broadwaycleanservices@gmail.com</a>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Phone size={18} color={colors.accentRed} />
@@ -156,6 +158,31 @@ function App() {
   // State for mobile menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  // Initialize theme from system preference or localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme('dark');
+    }
+  }, []);
+
+  // Update localStorage and class on theme change
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
 
   // Calculate new header height for main content padding
   // Logo height 60px + padding top/bottom 10px*2 = 80px. Add a bit more for safety.
@@ -206,19 +233,22 @@ function App() {
   return (
     <div className="App" style={{ backgroundColor: colors.bgWhite }}>
       <header className="App-header" style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        backgroundColor: 'var(--header-bg)',
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',
         padding: '10px 20px',
         color: colors.textHeader,
         boxShadow: '0 1px 0 rgba(0,0,0,0.05)',
-        position: 'sticky',
+        position: 'fixed',
         top: '0',
+        left: '0',
+        width: '100%',
         zIndex: 1000,
-        borderBottom: `1px solid rgba(0,0,0,0.05)`,
+        borderBottom: `1px solid var(--border-color)`,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        boxSizing: 'border-box'
       }}>
         <img src="/assets/logo_broadway_new.png" alt="Broadway Clean Services - Professional Residential Cleaning in San Francisco" style={{
           height: '60px',
@@ -261,10 +291,14 @@ function App() {
         </div>
 
         {/* Hamburger Menu Button (visible only on mobile) */}
-        <HamburgerIcon isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
+        {isMobile && <HamburgerIcon isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />}
 
-        {/* Placeholder for balancing logo on desktop */}
-        {!isMobile && <div style={{ width: '160px', flexShrink: 0 }} />}
+        {/* Balancing container for desktop: keeping it the same width as the logo area to center navigation */}
+        {!isMobile && (
+          <div style={{ width: '160px', flexShrink: 0, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+          </div>
+        )}
 
         {/* Mobile Navigation Menu */}
         {isMobile && (
@@ -302,11 +336,16 @@ function App() {
                 {item.label}
               </a>
             ))}
+            <div style={{ marginTop: '20px' }}>
+              <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+            </div>
           </nav>
         )}
 
+        {/* Toggle Theme moved exclusively to mobile menu per user request */}
+
       </header>
-      
+
       {/* Overlay for mobile menu background - Moved outside header for reliability */}
       {isMobile && isMobileMenuOpen && (
         <div

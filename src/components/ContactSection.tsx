@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 // Color palette
 // Theme Colors aligned with Reviews Section
 const colors = {
-  bgWhite: '#FFFFFF',
-  bgOffWhite: '#F8F9FA',
-  textHeader: '#1A1A1A',
-  textBody: '#4A4A4A',
-  accentRed: '#C54B43',
-  inputBg: '#F0F0F0',
-  cardShadow: '0 4px 12px rgba(0,0,0,0.05)',
-  inputBorder: '#EDEDED'
+  bgWhite: 'var(--bg-white)',
+  bgOffWhite: 'var(--bg-off-white)',
+  textHeader: 'var(--text-header)',
+  textBody: 'var(--text-body)',
+  accentRed: 'var(--accent-red)',
+  inputBg: 'var(--bg-off-white)',
+  cardShadow: 'var(--card-shadow)',
+  inputBorder: 'var(--card-border)'
 };
 
 const ContactForm: React.FC = () => {
@@ -102,13 +102,13 @@ const ContactForm: React.FC = () => {
     return (
       <div style={{ 
         padding: '40px 20px',
-        backgroundColor: colors.bgWhite, 
+        backgroundColor: 'var(--card-bg)', 
         borderRadius: '15px', 
         textAlign: 'center', 
         maxWidth: '600px',
         margin: '20px auto',
         boxShadow: colors.cardShadow,
-        border: '1px solid #EDEDED'
+        border: '1px solid var(--card-border)'
       }}>
         <h3 style={{ color: colors.textHeader, fontFamily: 'var(--font-headings)', fontSize: '1.8em', marginBottom: '15px' }}>Request Received!</h3>
         <p style={{ color: colors.textBody, fontSize: '1.1em' }}>Thank you, <strong>{formData.name}</strong>. We've received your data and will contact you shortly with your free quote.</p>
@@ -271,11 +271,11 @@ const ContactSection: React.FC = () => {
         <div style={{ 
           flex: '1 1 500px', 
           maxWidth: '850px', 
-          backgroundColor: colors.bgWhite, 
+          backgroundColor: 'var(--card-bg)', 
           padding: '50px', 
           borderRadius: '15px', 
           boxShadow: colors.cardShadow,
-          border: '1px solid #EDEDED',
+          border: '1px solid var(--card-border)',
           textAlign: 'left'
         }}>
           <h3 style={{ 

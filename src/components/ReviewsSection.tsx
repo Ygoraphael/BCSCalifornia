@@ -3,13 +3,13 @@ import googleReviews from '../data/google_data.json';
 
 // Theme Colors
 const colors = {
-  bgWhite: '#FFFFFF',
-  textHeader: '#1A1A1A',
-  textBody: '#4A4A4A',
-  accentRed: '#C54B43',
+  bgWhite: 'var(--bg-white)',
+  textHeader: 'var(--text-header)',
+  textBody: 'var(--text-body)',
+  accentRed: 'var(--accent-red)',
   accentGold: '#FFD700',
-  textMedium: '#666666',
-  cardShadow: '0 4px 12px rgba(0,0,0,0.05)',
+  textMedium: 'var(--text-body)',
+  cardShadow: 'var(--card-shadow)',
 };
 
 interface Review {
@@ -46,7 +46,7 @@ const ReviewCard: React.FC<{ review: Review }> = ({ review }) => {
 
   return (
     <div style={{
-      backgroundColor: colors.bgWhite,
+      backgroundColor: 'var(--card-bg)',
       borderRadius: '12px',
       padding: '30px',
       marginBottom: '20px',
@@ -55,7 +55,7 @@ const ReviewCard: React.FC<{ review: Review }> = ({ review }) => {
       width: '100%',
       maxWidth: '1200px',
       margin: '0 auto 20px',
-      border: '1px solid #EDEDED',
+      border: '1px solid var(--card-border)',
       fontFamily: 'var(--font-primary, "Open Sans", sans-serif)'
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
@@ -158,7 +158,7 @@ const ReviewsSection = () => {
           marginBottom: '40px',
           flexWrap: 'wrap'
         }}>
-          {['Google', 'Yelp'].map((tab) => (
+          {['Yelp', 'Google'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab as 'Google' | 'Yelp')}
@@ -197,9 +197,6 @@ const ReviewsSection = () => {
             </div>
           ) : (
             <>
-              {activeTab === 'Google' && (
-                googleReviews.map((r: any) => <ReviewCard key={r.id} review={{...r, platform: 'Google'}} />)
-              )}
               {activeTab === 'Yelp' && (
                 yelpReviews.length > 0 ? (
                   yelpReviews.map((r) => <ReviewCard key={r.id} review={r} />)
@@ -222,6 +219,9 @@ const ReviewsSection = () => {
                     </a>
                   </div>
                 )
+              )}
+              {activeTab === 'Google' && (
+                googleReviews.map((r: any) => <ReviewCard key={r.id} review={{...r, platform: 'Google'}} />)
               )}
               
               {activeTab === 'Google' && (

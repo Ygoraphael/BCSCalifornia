@@ -3,12 +3,12 @@ import { CheckCircle } from 'lucide-react'; // Example icon, can be changed
 
 // Color palette (can be imported from a central theme file in a larger app)
 const colors = {
-  bgWhite: '#FFFFFF',
-  bgOffWhite: '#F8F9FA',
-  textHeader: '#1A1A1A',
-  textBody: '#4A4A4A',
-  accentRed: '#C54B43',
-  cardShadow: '0 4px 12px rgba(0,0,0,0.05)',
+  bgWhite: 'var(--bg-white)',
+  bgOffWhite: 'var(--bg-off-white)',
+  textHeader: 'var(--text-header)',
+  textBody: 'var(--text-body)',
+  accentRed: 'var(--accent-red)',
+  cardShadow: 'var(--card-shadow)',
 };
 
 interface ServiceItemProps {
@@ -19,14 +19,14 @@ interface ServiceItemProps {
 
 const ServiceItem: React.FC<ServiceItemProps> = ({ title, description, icon }) => (
   <div style={{
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'var(--card-bg)',
     padding: '30px',
     borderRadius: '15px',
     width: '100%',
     boxShadow: colors.cardShadow,
     textAlign: 'left',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-    border: '1px solid #EDEDED'
+    border: '1px solid var(--card-border)'
   }} 
   onMouseOver={(e) => {
     e.currentTarget.style.transform = 'translateY(-5px)';

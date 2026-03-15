@@ -3,10 +3,10 @@ import { Award, Users, Shield, Clock, Smile, ClipboardCheck } from 'lucide-react
 
 // Color palette (can be imported from a central theme file in a larger app)
 const colors = {
-  bgWhite: '#FFFFFF',
-  textHeader: '#1A1A1A',
-  textBody: '#4A4A4A',
-  accentRed: '#C54B43',
+  bgWhite: 'var(--bg-white)',
+  textHeader: 'var(--text-header)',
+  textBody: 'var(--text-body)',
+  accentRed: 'var(--accent-red)',
 };
 
 interface PointItemProps {
@@ -17,15 +17,15 @@ interface PointItemProps {
 
 const PointItem: React.FC<PointItemProps> = ({ title, description, icon }) => (
   <div style={{
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'var(--card-bg)',
     borderLeft: `4px solid ${colors.accentRed}`,
     padding: '30px',
     borderRadius: '15px',
     width: '100%',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+    boxShadow: 'var(--card-shadow)',
     textAlign: 'left',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-    border: '1px solid #EDEDED'
+    border: '1px solid var(--card-border)'
   }}
   onMouseOver={(e) => {
     e.currentTarget.style.transform = 'translateY(-5px)';
